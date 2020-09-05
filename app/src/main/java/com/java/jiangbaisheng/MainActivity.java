@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.java.jiangbaisheng.ui.main.SectionsPagerAdapter;
+import androidx.fragment.app.*;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        KocoFragmentPagerAdapter kocoFragmentPagerAdapter = new KocoFragmentPagerAdapter(getSupportFragmentManager(),new ArrayList<Fragment>());
+//        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
+        viewPager.setAdapter(kocoFragmentPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -31,11 +34,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
                 Snackbar.make(view, "You died.", Snackbar.LENGTH_LONG)
-=======
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
->>>>>>> 65ed1dab1389124076f6c6e5358e583e4a8c3dd3
                         .setAction("Action", null).show();
             }
         });
