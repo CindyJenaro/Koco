@@ -1,16 +1,22 @@
 package com.java.jiangbaisheng;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView.*;
 
 import androidx.fragment.app.*;
 import java.util.*;
@@ -21,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("debug", "-------------------\nThe first debug message");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -38,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
     }
 
     private void initFragment(){
+        Log.d("debug", "in initFragment");
 
         List<String> titles = new ArrayList<>();
         titles.add("新闻列表");
@@ -65,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         kocoTL.setupWithViewPager(kocoVP);
         // set adapter for TabLayout
         kocoTL.setTabsFromPagerAdapter(kocoFPA);
+
     }
 
     // internal class of MainActivity
@@ -104,8 +114,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object){
+
             // long live the item!
             // super.destroyItem(container, position, object);
+
         }
     }
+
 }

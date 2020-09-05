@@ -8,6 +8,7 @@
     <dimen name="slogan_padding">8dp</dimen>
     <dimen name="slogan_margin_left">@dimen/appbar_padding</dimen>
     <dimen name="bg_height">140dp</dimen>
-    <dimen name="tab_margintop">30dp</dimen>
+    <dimen name="tab_margintop">38dp</dimen>
     <dimen name="top_button_textsize">20dp</dimen>
+    <dimen name="searchbar_padding">12dp</dimen>
 </resources>
