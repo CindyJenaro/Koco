@@ -5,4 +5,6 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="theme">#10aeb5</color>
     <color name="almost_white">#eeeeee</color>
+    <color name="stressKC">#000000</color>
+    <color name="almost_black">#111111</color>
 </resources>

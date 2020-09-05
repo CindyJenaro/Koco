@@ -8,7 +8,7 @@ public class StatisticsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.news_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.statistics_fragment, container, false);
         return view;
     }
 }
