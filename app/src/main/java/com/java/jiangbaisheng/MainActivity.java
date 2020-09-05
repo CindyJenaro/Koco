@@ -9,26 +9,26 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.java.jiangbaisheng.ui.main.SectionsPagerAdapter;
 import androidx.fragment.app.*;
 import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
+    ViewPager kocoVP;
+    TabLayout kocoTL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        KocoFragmentPagerAdapter kocoFragmentPagerAdapter = new KocoFragmentPagerAdapter(getSupportFragmentManager(),new ArrayList<Fragment>());
-//        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(kocoFragmentPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+
+        kocoVP = findViewById(R.id.view_pager);
+        kocoTL = findViewById(R.id.tabs);
+
+        initFragment();
+
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -38,5 +38,74 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void initFragment(){
+
+        List<String> titles = new ArrayList<>();
+        titles.add("新闻列表");
+        titles.add("疫情数据");
+        titles.add("疫情图谱");
+        titles.add("知疫学者");
+
+        for(int i = 0; i < titles.size(); i++){
+            kocoTL.addTab(kocoTL.newTab().setText(titles.get(i)));
+        }
+
+        ArrayList<Fragment> kocoFrags = new ArrayList<>();
+        kocoFrags.add(new NewsListFragment());
+        kocoFrags.add(new StatisticsFragment());
+        kocoFrags.add(new GraphFragment());
+        kocoFrags.add(new AcademicFragment());
+
+        FragmentAdapter kocoFPA = new FragmentAdapter(getSupportFragmentManager(), kocoFrags, titles);
+        kocoVP.setAdapter(kocoFPA);
+        kocoVP.setCurrentItem(0);
+        // connect TabLayout with ViewPager
+        kocoTL.setupWithViewPager(kocoVP);
+        // set adapter for TabLayout
+        kocoTL.setTabsFromPagerAdapter(kocoFPA);
+    }
+
+    // internal class of MainActivity
+    class FragmentAdapter extends FragmentPagerAdapter{
+
+        private List<String> titles;
+        private List<Fragment> fragments;
+
+        public FragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles){
+            super(fm);
+            this.fragments = fragments;
+            this.titles = titles;
+        }
+
+        @Override
+        public Fragment getItem(int position){
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount(){
+            return fragments.size();
+        }
+
+        @Override
+        public int getItemPosition(Object object){
+            return POSITION_NONE;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position){
+            if(null == titles)
+                return null;
+            else
+                return titles.get(position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object){
+            // long live the item!
+            // super.destroyItem(container, position, object);
+        }
     }
 }
