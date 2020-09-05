@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Koco</string>
+    <string name="tab_text_1">新闻列表</string>
+    <string name="tab_text_2">疫情数据</string>
+    <string name="tab_text_3">疫情图谱</string>
+    <string name="tab_text_4">知疫学者</string>
+</resources>
