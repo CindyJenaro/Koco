@@ -5,6 +5,9 @@
     <dimen name="appbar_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+<<<<<<< HEAD
     <dimen name="bg_height">167dp</dimen>
     <dimen name="tab_margintop">47dp</dimen>
+=======
+>>>>>>> 65ed1dab1389124076f6c6e5358e583e4a8c3dd3
 </resources>

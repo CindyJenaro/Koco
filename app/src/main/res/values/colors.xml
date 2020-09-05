@@ -3,6 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+<<<<<<< HEAD
     <color name="theme">#10aeb5</color>
+=======
+    <color name="covid">#10aeb5</color>
+>>>>>>> 65ed1dab1389124076f6c6e5358e583e4a8c3dd3
     <color name="almost_white">#eeeeee</color>
 </resources>
