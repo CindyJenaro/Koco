@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- configure search mode -->
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="newsList"
+    android:hint="@string/search_hint"
+    android:searchButtonText="Search"
+    android:searchMode="queryRewriteFromText"
+    />

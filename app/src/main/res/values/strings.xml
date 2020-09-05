@@ -4,4 +4,5 @@
     <string name="tab_text_2">疫情数据</string>
     <string name="tab_text_3">疫情图谱</string>
     <string name="tab_text_4">知疫学者</string>
+    <string name="search_hint">搜索</string>
 </resources>
