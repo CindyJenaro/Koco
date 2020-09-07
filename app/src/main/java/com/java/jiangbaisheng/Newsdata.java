@@ -12,7 +12,7 @@ public class Newsdata {
     private String content;
     private String time;
 
-    public Newsdata(String type, String title, String content,String newsid, String time) {
+    public Newsdata(String type, String title, String content, String newsid, String time) {
         this.newsid =  newsid;
         this.type = type;
         this.title = title;

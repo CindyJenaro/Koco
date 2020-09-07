@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_border"
+    >
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/item_padding"
+        android:paddingRight="@dimen/item_padding"
+        android:paddingTop="26dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="@dimen/item_marginleft"
+        android:text="钟南山发明新药起死回生    九成重症病人或因此获益"
+        android:textSize="34dp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/news_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2020-9-7"
+        android:textSize="16dp"
+        android:layout_below="@id/news_title"
+        android:paddingLeft="@dimen/date_padding_left"
+        android:paddingBottom="@dimen/item_padding"
+        android:layout_marginLeft="@dimen/item_marginleft"
+        />
+
+    <TextView
+        android:id="@+id/news_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="www.github.com"
+        android:gravity="right"
+        android:layout_below="@id/news_title"
+        android:paddingRight="@dimen/source_padding_right"
+        />
+    
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="12dp"
+        android:text="..."
+        android:textSize="8dp"
+        android:layout_below="@id/news_source"
+        android:layout_marginLeft="374dp"
+        android:background="@color/almost_white"
+        />
+</RelativeLayout>
