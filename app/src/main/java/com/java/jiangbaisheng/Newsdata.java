@@ -6,15 +6,36 @@ import androidx.room.PrimaryKey;
 public class Newsdata {
     @PrimaryKey(autoGenerate = true)
     public int id;
-
+    private String newsid;
     private String type;
     private String title;
     private String content;
+    private String time;
 
-    public Newsdata(String type, String title, String content) {
+    public Newsdata(String type, String title, String content,String newsid, String time) {
+        this.newsid =  newsid;
         this.type = type;
         this.title = title;
         this.content = content;
+        this.time= time;
+    }
+
+    public Newsdata() { }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getNewsid() {
+        return newsid;
+    }
+
+    public void setNewsid(String newsid) {
+        this.newsid = newsid;
     }
 
     public int getId() {
