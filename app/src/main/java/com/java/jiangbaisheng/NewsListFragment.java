@@ -33,11 +33,11 @@ public class NewsListFragment extends Fragment {
         kocoSV = (SearchView)view.findViewById(R.id.search);
         initSearchView();
 
-        kocoLV = (ListView)view.findViewById(R.id.news_list);
-        SimpleAdapter kocoSA = new SimpleAdapter(getActivity(), putData(),
-                R.layout.news_list_item, new String[]{"title", "date", "source"},
-                new int[]{R.id.news_title, R.id.news_date, R.id.news_source});
-        kocoLV.setAdapter(kocoSA);
+//        kocoLV = (ListView)view.findViewById(R.id.news_list);
+//        SimpleAdapter kocoSA = new SimpleAdapter(getActivity(), putData(),
+//                R.layout.news_list_item, new String[]{"title", "date", "source"},
+//                new int[]{R.id.news_title, R.id.news_date, R.id.news_source});
+//        kocoLV.setAdapter(kocoSA);
 
         return view;
 
@@ -102,9 +102,9 @@ public class NewsListFragment extends Fragment {
             String date = currentData.getTime();
             Log.d("debug", date);
             map.put("date", date);
-            String source = currentData.getSource();
-            Log.d("debug", source);
-            map.put("source", source);
+//            String source = currentData.getSource();
+//            Log.d("debug", source);
+//            map.put("source", source);
         }
         return list;
     }

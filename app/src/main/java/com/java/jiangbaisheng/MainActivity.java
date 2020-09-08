@@ -60,15 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         getnews();
 
-        List<Newsdata> allUsers = Newsdatabase
-                .getInstance(this)
-                .getNewsDao()
-                .getall();
-
-        String id = allUsers.get(3).getNewsid();
-        String title = allUsers.get(3).getTitle();
-        Log.d("debug", id);
-        Log.d("debug", title);
     }
 
     private void initFragment(){
@@ -254,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                             String type= json.getString("type");
 //                            Log.v("YX",id);
                             insert_to_database(j,id,title,content,time,type);
-                            Log.v("YX",j);
+//                            Log.v("YX",j);
 
                         }
                     }
@@ -262,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 //                    query();
 
                 } catch (Exception e) {
-                    Log.v("YX", e.toString());
+//                    Log.v("YX", e.toString());
                     System.out.println(e.toString());
 
                 }
