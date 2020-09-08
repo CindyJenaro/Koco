@@ -12,6 +12,11 @@ import android.widget.*;
 import android.util.Log;
 import androidx.fragment.app.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class NewsListFragment extends Fragment {
 
     View view;
@@ -28,12 +33,11 @@ public class NewsListFragment extends Fragment {
         kocoSV = (SearchView)view.findViewById(R.id.search);
         initSearchView();
 
-//        Cursor cursor = getActivity().getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, PROJECTION, null, null, null);
-//        Adapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
-//                cursor, new String[]{ContactsContract.RawContacts.})
         kocoLV = (ListView)view.findViewById(R.id.news_list);
-//        kocoLV.setAdapter();
-
+        SimpleAdapter kocoSA = new SimpleAdapter(getActivity(), putData(),
+                R.layout.news_list_item, new String[]{"title", "date", "source"},
+                new int[]{R.id.news_title, R.id.news_date, R.id.news_source});
+        kocoLV.setAdapter(kocoSA);
 
         return view;
 
@@ -44,7 +48,7 @@ public class NewsListFragment extends Fragment {
         kocoSV.setIconifiedByDefault(false);
         kocoSV.setSubmitButtonEnabled(true);
         kocoSV.onActionViewExpanded();
-        kocoSV.setQueryHint("搜索");
+        kocoSV.setQueryHint("");
         kocoSV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             private String TAG = getClass().getSimpleName();
@@ -71,10 +75,37 @@ public class NewsListFragment extends Fragment {
                 return false;
             }
 
-
         });
 
     }
 
+    public List<Map<String, Object>> putData(){
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+//        Map<String, Object> map1 = new HashMap<String, Object>();
+//        map1.put("title", "我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘");
+//        map1.put("date", "1407-101-219");
+//        map1.put("source", "www.gschalk.org");
+//        list.add(map1);
 
+        List<Newsdata> allUsers = Newsdatabase
+                .getInstance(getActivity())
+                .getNewsDao()
+                .getall();
+
+        for(int idx = 0; idx < 6; idx++){
+            Map<String, Object> map = new HashMap<>();
+            Newsdata currentData = allUsers.get(idx);
+            String id = currentData.getNewsid();
+            String title = currentData.getTitle();
+            Log.d("debug", title);
+            map.put("title", title);
+            String date = currentData.getTime();
+            Log.d("debug", date);
+            map.put("date", date);
+            String source = currentData.getSource();
+            Log.d("debug", source);
+            map.put("source", source);
+        }
+        return list;
+    }
 }

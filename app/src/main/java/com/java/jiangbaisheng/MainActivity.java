@@ -60,7 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
         getnews();
 
+        List<Newsdata> allUsers = Newsdatabase
+                .getInstance(this)
+                .getNewsDao()
+                .getall();
 
+        String id = allUsers.get(3).getNewsid();
+        String title = allUsers.get(3).getTitle();
+        Log.d("debug", id);
+        Log.d("debug", title);
     }
 
     private void initFragment(){
@@ -141,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //        if (imm != null) {
-//            imm.hideSoftInputFromWindow(mListView.getWindowToken(), 0);
+//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 //        }
 //    }
 

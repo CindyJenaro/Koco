@@ -16,8 +16,12 @@ public class Newsdata {
     private String content;
     private String time;
 
+<<<<<<< HEAD
     public Newsdata(String json, String type, String title, String content,String newsid, String time) {
         this.json=json;
+=======
+    public Newsdata(String type, String title, String content, String newsid, String time) {
+>>>>>>> 717c4cfbf330270f4c0808397d226ef12906f1b4
         this.newsid =  newsid;
         this.type = type;
         this.title = title;
