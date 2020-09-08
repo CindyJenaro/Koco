@@ -15,8 +15,8 @@
         android:paddingBottom="10dp"
         android:layout_marginLeft="@dimen/item_marginleft"
         android:text="钟南山发明新药起死回生    九成重症病人或因此获益"
-        android:textSize="34dp"
-        android:textColor="#000000"
+        android:textSize="@dimen/title_textsize"
+        android:textColor="@color/almost_black"
         />
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_below="@id/news_title"
         android:paddingRight="@dimen/source_padding_right"
         />
-    
+
     <Button
         android:layout_width="30dp"
         android:layout_height="12dp"

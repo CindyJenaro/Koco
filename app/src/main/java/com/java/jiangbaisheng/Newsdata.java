@@ -15,7 +15,6 @@ public class Newsdata {
     private String title;
     private String content;
     private String time;
-    
 
     public Newsdata() { }
 

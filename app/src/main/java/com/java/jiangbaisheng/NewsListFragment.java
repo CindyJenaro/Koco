@@ -22,7 +22,7 @@ public class NewsListFragment extends Fragment {
     View view;
     SearchView kocoSV;
     ListView kocoLV;
-
+    RefreshableView kocoRV;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -30,14 +30,28 @@ public class NewsListFragment extends Fragment {
         Log.d("debug","in onCreateView, NewsListFragment");
         view = inflater.inflate(R.layout.news_list_fragment, container, false);
 
-        kocoSV = (SearchView)view.findViewById(R.id.search);
+        kocoSV = view.findViewById(R.id.search);
         initSearchView();
 
-//        kocoLV = (ListView)view.findViewById(R.id.news_list);
-//        SimpleAdapter kocoSA = new SimpleAdapter(getActivity(), putData(),
-//                R.layout.news_list_item, new String[]{"title", "date", "source"},
-//                new int[]{R.id.news_title, R.id.news_date, R.id.news_source});
-//        kocoLV.setAdapter(kocoSA);
+        kocoRV = view.findViewById(R.id.refreshable_view);
+        kocoLV = view.findViewById(R.id.news_list);
+        SimpleAdapter kocoSA = new SimpleAdapter(getActivity(), putData(),
+                R.layout.news_list_item, new String[]{"title", "date", "source"},
+                new int[]{R.id.news_title, R.id.news_date, R.id.news_source});
+        kocoLV.setAdapter(kocoSA);
+
+        kocoRV.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
+            @Override // overriding child interface's method
+            public void onRefresh() {
+                try{
+                    Log.d("debug", "I am refreshing!");
+                    Thread.sleep(3000);
+                } catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+                kocoRV.finishRefreshing();
+            }
+        }, 1);
 
         return view;
 
@@ -81,31 +95,37 @@ public class NewsListFragment extends Fragment {
 
     public List<Map<String, Object>> putData(){
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-//        Map<String, Object> map1 = new HashMap<String, Object>();
-//        map1.put("title", "我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘");
-//        map1.put("date", "1407-101-219");
-//        map1.put("source", "www.gschalk.org");
-//        list.add(map1);
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        map1.put("title", "钟南山发明新药起死回生    九成重症病人或因此获益");
+        map1.put("date", "1407-101-219");
+        map1.put("source", "www.abcda.org");
+        list.add(map1);
+        list.add(map1);
+        list.add(map1);
+        list.add(map1);
+        list.add(map1);
+        list.add(map1);
 
-        List<Newsdata> allUsers = Newsdatabase
-                .getInstance(getActivity())
-                .getNewsDao()
-                .getall();
 
-        for(int idx = 0; idx < 6; idx++){
-            Map<String, Object> map = new HashMap<>();
-            Newsdata currentData = allUsers.get(idx);
-            String id = currentData.getNewsid();
-            String title = currentData.getTitle();
-            Log.d("debug", title);
-            map.put("title", title);
-            String date = currentData.getTime();
-            Log.d("debug", date);
-            map.put("date", date);
-//            String source = currentData.getSource();
-//            Log.d("debug", source);
-//            map.put("source", source);
-        }
+//        List<Newsdata> allUsers = Newsdatabase
+//                .getInstance(getActivity())
+//                .getNewsDao()
+//                .getall();
+//
+//        for(int idx = 0; idx < 6; idx++){
+//            Map<String, Object> map = new HashMap<>();
+//            Newsdata currentData = allUsers.get(idx);
+//            String id = currentData.getNewsid();
+//            String title = currentData.getTitle();
+//            Log.d("debug", title);
+//            map.put("title", title);
+//            String date = currentData.getTime();
+//            Log.d("debug", date);
+//            map.put("date", date);
+////            String source = currentData.getSource();
+////            Log.d("debug", source);
+////            map.put("source", source);
+//        }
         return list;
     }
 }
