@@ -34,6 +34,7 @@ import java.util.*;
 public class MainActivity extends AppCompatActivity {
     ViewPager kocoVP;
     TabLayout kocoTL;
+    String newsjson=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,13 +155,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             //每次获取两千条
+
             getnewsurl("https://covid-dashboard.aminer.cn/api/events/list?type=paper&page="+1+"&size=2000");
             handler.postDelayed(this, 300000);//五分钟之后获取新的新闻
         }
     };
 
-    public void insert_to_database(String newsid, String title,String time, String content, String type) {
+    public void insert_to_database(String json,String newsid, String title,String time, String content, String type) {
         Newsdata news = new Newsdata();
+        news.setJson(json);
         news.setNewsid(newsid);
         news.setTitle(title);
         news.setTime(time);
@@ -171,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
                 .getNewsDao()
                 .insertdata(news);
     }
+
+
 
     private void query() {
         Log.v("YX","In query!");
@@ -232,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray array = testjson.getJSONArray("data");
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject json = array.getJSONObject(i);    //取出数组中的对象
+                            String j = json.toString();
 
                             String id= json.getString("_id");
                             String content= json.getString("content");
@@ -239,7 +245,9 @@ public class MainActivity extends AppCompatActivity {
                             String title= json.getString("title");
                             String type= json.getString("type");
 //                            Log.v("YX",id);
-                            insert_to_database(id,title,content,time,type);
+                            insert_to_database(j,id,title,content,time,type);
+                            Log.v("YX",j);
+
                         }
                     }
 

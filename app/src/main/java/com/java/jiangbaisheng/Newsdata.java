@@ -2,17 +2,22 @@ package com.java.jiangbaisheng;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONObject;
+
 @Entity()
 public class Newsdata {
     @PrimaryKey(autoGenerate = true)
     public int id;
+
+    private String json;
     private String newsid;
     private String type;
     private String title;
     private String content;
     private String time;
 
-    public Newsdata(String type, String title, String content,String newsid, String time) {
+    public Newsdata(String json, String type, String title, String content,String newsid, String time) {
+        this.json=json;
         this.newsid =  newsid;
         this.type = type;
         this.title = title;
@@ -21,6 +26,14 @@ public class Newsdata {
     }
 
     public Newsdata() { }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
 
     public String getTime() {
         return time;
