@@ -172,6 +172,11 @@ public class MainActivity extends AppCompatActivity {
                 .getInstance(this)
                 .getNewsDao()
                 .insertdata(news);
+
+//        Newsdata news2 =  Newsdatabase.getInstance(this).getNewsDao().getbyid(1);
+//        Newsdatabase.getInstance(this).getNewsDao().deletedata(news2);
+
+
     }
 
 
