@@ -13,6 +13,7 @@
 
         <SearchView
             android:id="@+id/search"
+            android:background="@drawable/searchbar_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/searchbar_padding"/>

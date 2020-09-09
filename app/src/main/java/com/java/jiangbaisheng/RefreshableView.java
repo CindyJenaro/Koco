@@ -45,7 +45,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
     private boolean loadOnce; // whether layout is loaded already; initially false
     private boolean ableToPull;
 
-    // the refreshable view is inserted dynamically.
+    // this refreshable view is inserted dynamically.
     public RefreshableView(Context context, AttributeSet attrs) {
         super(context, attrs);
         header = LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_head,

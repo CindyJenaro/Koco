@@ -24,6 +24,7 @@ public class NewsListFragment extends Fragment {
     ListView kocoLV;
     RefreshableView kocoRV;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
@@ -59,10 +60,8 @@ public class NewsListFragment extends Fragment {
 
     private void initSearchView(){
 
-        kocoSV.setIconifiedByDefault(false);
         kocoSV.setSubmitButtonEnabled(true);
-        kocoSV.onActionViewExpanded();
-        kocoSV.setQueryHint("");
+        kocoSV.setQueryHint("mdzz");
         kocoSV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             private String TAG = getClass().getSimpleName();
@@ -97,8 +96,8 @@ public class NewsListFragment extends Fragment {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Map<String, Object> map1 = new HashMap<String, Object>();
         map1.put("title", "钟南山发明新药起死回生    九成重症病人或因此获益");
-        map1.put("date", "1407-101-219");
-        map1.put("source", "www.abcda.org");
+        map1.put("date", "2020-9-7");
+        map1.put("source", "www.github.com");
         list.add(map1);
         list.add(map1);
         list.add(map1);
