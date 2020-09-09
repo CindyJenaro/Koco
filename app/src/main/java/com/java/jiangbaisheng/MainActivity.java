@@ -38,10 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         getSystemService(Context.INPUT_METHOD_SERVICE);
         Log.d("debug", "-------------------\nThe first debug message");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        delAll();
+        getnews();//获取新闻
 
         kocoVP = findViewById(R.id.view_pager);
         kocoTL = findViewById(R.id.tabs);
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getnews();
+
 
     }
 
@@ -172,6 +175,11 @@ public class MainActivity extends AppCompatActivity {
                 .getInstance(this)
                 .getNewsDao()
                 .insertdata(news);
+
+//        Newsdata news2 =  Newsdatabase.getInstance(this).getNewsDao().getbyid(1);
+//        Newsdatabase.getInstance(this).getNewsDao().deletedata(news2);
+
+
     }
 
 

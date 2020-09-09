@@ -14,6 +14,12 @@ public interface DataDao { // DAO: Data Access Object
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertdata(Newsdata... news);
 
+    @Delete
+    void deletedata(Newsdata... news);
+
+    @Query("SELECT * FROM Newsdata WHERE id= :id")
+    Newsdata getbyid(int id);
+
     @Query("DELETE FROM Newsdata")
     void deleteAll();
     @Query("SELECT * FROM Newsdata ORDER BY ID")
