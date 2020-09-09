@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                             String title= json.getString("title");
                             String type= json.getString("type");
 //                            Log.v("YX",id);
-                            insert_to_database(j,id,title,content,time,type);
+                            insert_to_database(j,id,title,time,content,type);
 //                            Log.v("YX",j);
 
                         }

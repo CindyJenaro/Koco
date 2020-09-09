@@ -25,7 +25,9 @@
             <ListView
                 android:id="@+id/news_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+
+            </ListView>
 
         </com.java.jiangbaisheng.RefreshableView>
 

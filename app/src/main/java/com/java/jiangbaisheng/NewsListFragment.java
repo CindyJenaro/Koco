@@ -24,7 +24,6 @@ public class NewsListFragment extends Fragment {
     ListView kocoLV;
     RefreshableView kocoRV;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
@@ -94,37 +93,43 @@ public class NewsListFragment extends Fragment {
 
     public List<Map<String, Object>> putData(){
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("title", "钟南山发明新药起死回生    九成重症病人或因此获益");
-        map1.put("date", "2020-9-7");
-        map1.put("source", "www.github.com");
-        list.add(map1);
-        list.add(map1);
-        list.add(map1);
-        list.add(map1);
-        list.add(map1);
-        list.add(map1);
+
+//        Map<String, Object> map1 = new HashMap<String, Object>();
+//        map1.put("title", "钟南山发明新药起死回生    九成重症病人或因此获益");
+//        map1.put("date", "2020-9-7");
+//        map1.put("source", "www.github.com");
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1); // test demo
 
 
-//        List<Newsdata> allUsers = Newsdatabase
-//                .getInstance(getActivity())
-//                .getNewsDao()
-//                .getall();
-//
-//        for(int idx = 0; idx < 6; idx++){
-//            Map<String, Object> map = new HashMap<>();
-//            Newsdata currentData = allUsers.get(idx);
-//            String id = currentData.getNewsid();
-//            String title = currentData.getTitle();
-//            Log.d("debug", title);
-//            map.put("title", title);
-//            String date = currentData.getTime();
-//            Log.d("debug", date);
-//            map.put("date", date);
-////            String source = currentData.getSource();
-////            Log.d("debug", source);
-////            map.put("source", source);
-//        }
+        List<Newsdata> allUsers = Newsdatabase
+                .getInstance(getActivity())
+                .getNewsDao()
+                .getall();
+
+        for(int idx = 1; idx < 17; idx++){
+            Map<String, Object> map = new HashMap<>();
+            Newsdata currentData = allUsers.get(idx);
+            String id = currentData.getNewsid();
+            String title = currentData.getTitle();
+            Log.d("debug", title);
+            map.put("title", title);
+            String date = "" + currentData.getTime();
+            Log.d("debug", date);
+            map.put("date", date);
+            list.add(map);
+//            String source = currentData.getSource();
+//            Log.d("debug", source);
+//            map.put("source", source);
+        }
+
+        Map<String, Object> noMoreItems = new HashMap<>();
+        noMoreItems.put("title", "没有更多了");
+        list.add(noMoreItems);
         return list;
     }
 }

@@ -30,7 +30,6 @@ public class UnlikeButtonSet extends RelativeLayout {
             @Override
             public void onClick(View view) {
 
-                Log.d("debug", "triggered already");
                 unlike.setVisibility(View.VISIBLE);
 
             }

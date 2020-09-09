@@ -28,7 +28,8 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
 
     private PullToRefreshListener kocoPTRL; // pull-to-refresh listener
 
-    private View header; // pull to refresh header
+    private View header; // pull-to-refresh header
+    private View foot; // no-more-content foot
     private ListView listView;
     private ProgressBar progressBar;
     private ImageView arrow;
@@ -49,6 +50,8 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
     public RefreshableView(Context context, AttributeSet attrs) {
         super(context, attrs);
         header = LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_head,
+                null, true);
+        foot = LayoutInflater.from(context).inflate(R.layout.no_more_content,
                 null, true);
         progressBar = header.findViewById(R.id.progress_bar);
         arrow = header.findViewById(R.id.arrow);
