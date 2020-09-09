@@ -12,6 +12,9 @@ import android.widget.*;
 import android.util.Log;
 import androidx.fragment.app.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +39,8 @@ public class NewsListFragment extends Fragment {
         kocoRV = view.findViewById(R.id.refreshable_view);
         kocoLV = view.findViewById(R.id.news_list);
         SimpleAdapter kocoSA = new SimpleAdapter(getActivity(), putData(),
-                R.layout.news_list_item, new String[]{"title", "date", "source"},
-                new int[]{R.id.news_title, R.id.news_date, R.id.news_source});
+                R.layout.news_list_item, new String[]{"title", "date", "type"},
+                new int[]{R.id.news_title, R.id.news_date, R.id.news_type});
         kocoLV.setAdapter(kocoSA);
 
         kocoRV.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
@@ -112,6 +115,7 @@ public class NewsListFragment extends Fragment {
                 .getall();
 
         for(int idx = 1; idx < 17; idx++){
+
             Map<String, Object> map = new HashMap<>();
             Newsdata currentData = allUsers.get(idx);
             String id = currentData.getNewsid();
@@ -121,10 +125,19 @@ public class NewsListFragment extends Fragment {
             String date = "" + currentData.getTime();
             Log.d("debug", date);
             map.put("date", date);
+
+            String json = currentData.getJson();
+            try{
+                JSONObject jobj = new JSONObject(json);
+                String type = jobj.getString("type");
+                map.put("type", type);
+            } catch(JSONException e) {
+                Log.d("debug", "JSONException occured!");
+                e.printStackTrace();
+            }
+
+
             list.add(map);
-//            String source = currentData.getSource();
-//            Log.d("debug", source);
-//            map.put("source", source);
         }
 
         Map<String, Object> noMoreItems = new HashMap<>();

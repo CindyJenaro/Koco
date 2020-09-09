@@ -33,7 +33,7 @@
         />
 
     <TextView
-        android:id="@+id/news_source"
+        android:id="@+id/news_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="www.github.com"
@@ -45,8 +45,8 @@
     <com.java.jiangbaisheng.UnlikeButtonSet
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/news_source"
-        android:layout_alignRight="@+id/news_source"
+        android:layout_below="@id/news_type"
+        android:layout_alignRight="@+id/news_type"
         />
 
 </RelativeLayout>

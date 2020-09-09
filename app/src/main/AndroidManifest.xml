@@ -33,6 +33,7 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".SearchNewsActivity"></activity>
+        <activity android:name=".GetNewsDetailActivity"></activity>
 
     </application>
 
