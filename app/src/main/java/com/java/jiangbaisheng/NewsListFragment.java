@@ -120,10 +120,8 @@ public class NewsListFragment extends Fragment {
             Newsdata currentData = allUsers.get(idx);
             String id = currentData.getNewsid();
             String title = currentData.getTitle();
-            Log.d("debug", title);
             map.put("title", title);
             String date = "" + currentData.getTime();
-            Log.d("debug", date);
             map.put("date", date);
 
             String json = currentData.getJson();

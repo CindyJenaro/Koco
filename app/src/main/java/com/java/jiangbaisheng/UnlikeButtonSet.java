@@ -40,10 +40,10 @@ public class UnlikeButtonSet extends RelativeLayout {
             @Override
             public void onClick(View view) {
                 // remove item from database and refresh
-
-//                Intent intent = new Intent();
-//                intent.setClass(getContext(), GetNewsDetailActivity.class);
-//                getContext().startActivity(intent);
+                // test evoking activity
+                Intent intent = new Intent();
+                intent.setClass(getContext(), GetNewsDetailActivity.class);
+                getContext().startActivity(intent);
                 // method startActivity needs to be called either explicitly from a context
                 // or if you're in an Activity.
             }

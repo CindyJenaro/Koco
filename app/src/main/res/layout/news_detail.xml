@@ -5,69 +5,125 @@
     android:layout_height="wrap_content"
     >
 
-    <TextView
-        android:id="@+id/detail_title"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bg_height"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@drawable/virus">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="?actionBarSize"
+            android:padding="@dimen/appbar_padding"
+            android:text="@string/app_name"
+            android:textColor="@color/almost_white"
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Know Covid-19 Better."
+            android:layout_marginLeft="@dimen/slogan_margin_left"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="新闻详情页"
+            android:textColor="@color/almost_white"
+            android:textSize="23dp"
+            android:gravity="bottom|center_horizontal"
+
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="我是皮卡丘我是皮卡丘我是皮卡丘"
-        android:textSize="@dimen/title_textsize"
-        android:paddingTop="@dimen/detail_padding"
-        android:paddingRight="@dimen/detail_padding"
-        android:paddingLeft="@dimen/detail_padding"
-        android:textColor="@color/almost_black"
-        />
+        android:layout_below="@id/detail_header"
+        >
 
-    <TextView
-        android:id="@+id/detail_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/detail_title"
-        android:paddingLeft="@dimen/detail_padding"
-        android:paddingTop="10dp"
-        android:text="日期：3028-11-11"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
-    <TextView
-        android:id="@+id/detail_author"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/detail_title"
-        android:layout_toRightOf="@id/detail_time"
-        android:paddingTop="10dp"
-        android:gravity="right"
-        android:text="作者：Pika Jenaro"
-        android:paddingRight="@dimen/detail_padding"
-        />
+            <TextView
+                android:id="@+id/detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="我是皮卡丘我是皮卡丘我是皮卡丘"
+                android:textSize="@dimen/title_textsize"
 
-    <TextView
-        android:id="@+id/detail_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:textColor="@color/moderate_black"
-        android:text="我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘"
-        android:layout_below="@id/detail_title"
-        android:padding="@dimen/detail_padding"
-        />
+                android:paddingTop="@dimen/detail_padding"
+                android:paddingRight="@dimen/detail_padding"
+                android:paddingLeft="@dimen/detail_padding"
+                android:textColor="@color/almost_black"
+                />
 
-    <TextView
-        android:id="@+id/detail_source"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/detail_text"
-        android:gravity="right"
-        android:paddingRight="@dimen/detail_padding"
-        android:text="来源：WWW.XINHUA.NET"
-        android:paddingBottom="20dp"
-        />
+            <TextView
+                android:id="@+id/detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_title"
+                android:paddingLeft="@dimen/detail_padding"
+                android:paddingTop="10dp"
+                android:text="日期：3028-11-11"
+                />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/detail_source"
-        android:text="返回首页"
-        />
+            <TextView
+                android:id="@+id/detail_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_title"
+                android:layout_toRightOf="@id/detail_time"
+                android:paddingTop="10dp"
+                android:gravity="right"
+                android:text="作者：Pika Jenaro"
+                android:paddingRight="@dimen/detail_padding"
+                />
+
+            <TextView
+                android:id="@+id/detail_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/moderate_black"
+                android:text="我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘"
+                android:layout_below="@id/detail_title"
+                android:padding="@dimen/detail_padding"
+                />
+
+            <TextView
+                android:id="@+id/detail_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_text"
+                android:gravity="right"
+                android:paddingRight="@dimen/detail_padding"
+                android:text="来源：WWW.XINHUA.NET"
+                android:paddingBottom="20dp"
+                />
+
+            <Button
+                android:id="@+id/return_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/detail_source"
+                android:text="返回首页"
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>

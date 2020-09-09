@@ -3,29 +3,37 @@ package com.java.jiangbaisheng;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetNewsDetailActivity extends AppCompatActivity {
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState,
-                         @Nullable PersistableBundle persistentState) {
+    Button returnBtn;
 
-        super.onCreate(savedInstanceState, persistentState);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
         Log.d("debug", "in SearchNewsActivity");
 
         setContentView(R.layout.news_detail);
-        //        kocoSV = findViewById(R.id.search);
-        //
-        //        if(kocoSV != null){
-        //            // collapse keyboard:
-        //            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        //            if(imm != null){
-        //                imm.hideSoftInputFromWindow(kocoSV.getWindowToken(), 0);
-        //            }
-        //            kocoSV.clearFocus();
-        //        }
+
+        returnBtn = findViewById(R.id.return_button);
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
+
 }
