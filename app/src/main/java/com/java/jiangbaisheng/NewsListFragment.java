@@ -12,6 +12,7 @@ import android.widget.*;
 import android.util.Log;
 import androidx.fragment.app.*;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,7 +111,11 @@ public class NewsListFragment extends Fragment {
                 try{
                     Log.d("debug", "I am refreshing!");
                     Thread.sleep(3000);
-                } catch(InterruptedException e){
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.getnews();
+//                    mainActivity.reloadNewsListFragment();
+
+                } catch(Exception e){
                     e.printStackTrace();
                 }
                 kocoRV.finishRefreshing();
