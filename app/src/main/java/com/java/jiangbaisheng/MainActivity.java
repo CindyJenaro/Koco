@@ -177,6 +177,18 @@ public class MainActivity extends AppCompatActivity {
                 .getNewsDao()
                 .insertdata(news);
 
+        Newsdatanochange newsnochange = new Newsdatanochange();
+        newsnochange.setJson(json);
+        newsnochange.setNewsid(newsid);
+        newsnochange.setTitle(title);
+        newsnochange.setTime(time);
+        newsnochange.setContent(content);
+        newsnochange.setType(type);
+        Newsdatabase
+                .getInstance(this)
+                .getNewsDao()
+                .insertdatanochange(newsnochange);
+
 //        Newsdata news2 =  Newsdatabase.getInstance(this).getNewsDao().getbyid(1);
 //        Newsdatabase.getInstance(this).getNewsDao().deletedata(news2);
 
@@ -187,29 +199,41 @@ public class MainActivity extends AppCompatActivity {
 
     private void query() {
         Log.v("YX","In query!");
-        List<Newsdata> allUsers = Newsdatabase
+//        List<Newsdata> allUsers = Newsdatabase
+//                .getInstance(this)
+//                .getNewsDao()
+//                .getall();
+
+        List<Newsdatanochange> all = Newsdatabase
                 .getInstance(this)
                 .getNewsDao()
-                .getall();
+                .getallnochange();
 
-        List<Newsdata> paper = Newsdatabase
-                .getInstance(this)
-                .getNewsDao()
-                .getwithtype("paper");
-
-        for(int i=0;i<paper.size();i++){
-            String title=allUsers.get(i).getTitle();
-            String id=allUsers.get(i).getType();
-            Log.v("YX","查到了title："+title);
-            Log.v("YX","type是"+id);
+        for(int i=0;i<all.size();i++){
+            int title=all.get(i).getId();
+            String type=all.get(i).getType();
+            Log.v("YX","查到了id："+Integer.toString(title));
+            Log.v("YX","type是"+type);
         }
 
-        for(int i=0;i<allUsers.size();i++){
-            String id=allUsers.get(i).getNewsid();
-            String title=allUsers.get(i).getTitle();
-            Log.v("YX","查到"+Integer.toString(i)+"的id:"+id);
-            Log.v("YX","查到了title："+title);
-        }
+//        List<Newsdata> paper = Newsdatabase
+//                .getInstance(this)
+//                .getNewsDao()
+//                .getwithtype("paper");
+
+//        for(int i=0;i<paper.size();i++){
+//            String title=allUsers.get(i).getTitle();
+//            String id=allUsers.get(i).getType();
+//            Log.v("YX","查到了title："+title);
+//            Log.v("YX","type是"+id);
+//        }
+//
+//        for(int i=0;i<allUsers.size();i++){
+//            String id=allUsers.get(i).getNewsid();
+//            String title=allUsers.get(i).getTitle();
+//            Log.v("YX","查到"+Integer.toString(i)+"的id:"+id);
+//            Log.v("YX","查到了title："+title);
+//        }
 
     }
 

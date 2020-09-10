@@ -14,6 +14,9 @@ public interface DataDao { // DAO: Data Access Object
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertdata(Newsdata... news);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertdatanochange(Newsdatanochange... newsdatanochange);
+
     @Delete
     void deletedata(Newsdata... news);
 
@@ -27,6 +30,8 @@ public interface DataDao { // DAO: Data Access Object
     void deleteAll();
     @Query("SELECT * FROM Newsdata ORDER BY ID")
     List<Newsdata> getall();
+    @Query("SELECT * FROM Newsdatanochange ORDER BY ID")
+    List<Newsdatanochange> getallnochange();
 
     @Query("SELECT * FROM Newsdata WHERE type LIKE :type")
     List<Newsdata> getwithtype(String type);
