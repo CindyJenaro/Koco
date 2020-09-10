@@ -33,7 +33,7 @@ public class StatisticsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.statistics_with_table, container, false);
-        getdata();//获取疫情数据
+//        getdata();//获取疫情数据
 
         table= view.findViewById(R.id.table);//初始化table
 //        maketable();

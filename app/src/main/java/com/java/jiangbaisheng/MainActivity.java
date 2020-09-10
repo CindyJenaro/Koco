@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 //            delAll();
 //        } catch (Exception e) {}
 
-        getnews();//获取新闻
+//        getnews();//获取新闻
 
         kocoVP = findViewById(R.id.view_pager);
         kocoTL = findViewById(R.id.tabs);
@@ -157,9 +157,9 @@ public class MainActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            //每次获取两千条
+            //每次获取两百条
 
-            getnewsurl("https://covid-dashboard.aminer.cn/api/events/list?type=paper&page="+1+"&size=2000");
+            getnewsurl("https://covid-dashboard.aminer.cn/api/events/list?type=paper&page="+1+"&size=200");
             handler.postDelayed(this, 300000);//五分钟之后获取新的新闻
         }
     };
