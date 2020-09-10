@@ -10,6 +10,7 @@ import com.bin.david.form.annotation.SmartColumn;
 //import com.bin.david.form.annotation.SmartTable;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.format.draw.MultiLineDrawFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
 
@@ -22,10 +23,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class StatisticsFragment extends Fragment {
     HashMap<String,String> stat = new HashMap<>();
@@ -33,51 +38,11 @@ public class StatisticsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.statistics_with_table, container, false);
-//        getdata();//获取疫情数据
+        getdata();//获取疫情数据
 
         table= view.findViewById(R.id.table);//初始化table
-//        maketable();
         return view;
     }
-
-    public void maketable(){
-        Column<String> country = new Column<>("country", "country");
-        Column<String> confirmed = new Column<>("confirmed", "confirmed");
-        Column<String> suspected = new Column<>("suspected", "suspected");
-        Column<String> cured = new Column<>("cured", "cured");
-        Column<String> dead = new Column<>("dead", "dead");
-        Column<String> severe = new Column<>("severe", "severe");
-        Column<String> risk = new Column<>("risk", "risk");
-
-        //设置该列当字段相同时自动合并
-        country.setAutoMerge(true);
-
-        List<Statitics> list = new ArrayList<>();
-        Log.v("YX", "1");
-        Log.v("YX", Integer.toString(stat.size()));
-        for (HashMap.Entry<String, String> entry : stat.entrySet()) {
-            Log.v("YX", "12");
-            String temp = entry.getValue();
-            String[] splitnum = temp.split(",");
-//            list.add(new Statitics(entry.getKey(), splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
-            Log.v("YX", splitnum[0] + " " + splitnum[1] + " " + splitnum[2] + " " + splitnum[3] + " " + splitnum[4] + " " + splitnum[5]);
-
-//            System.out.println("key = " + entry.getKey() + ", value = " + entry.getValue());
-        }
-
-//        list.add(new Statitics("Beijing", "100", "150", "50", "240", "1100", "450"));
-
-
-        TableData<Statitics> tableData = new TableData<>("疫情数据", list, country, confirmed, suspected, cured, dead, severe, risk);
-
-        //设置数据
-
-        table.getConfig().setShowXSequence(false);
-        table.getConfig().setShowYSequence(false);
-        table.setTableData(tableData);
-        table.getConfig().setContentStyle(new FontStyle());
-    }
-
 
     public class Statitics {
         public Statitics(String country, String province, String county, String confirmed, String suspected, String cured, String dead, String severe, String risk) {
@@ -146,24 +111,52 @@ public class StatisticsFragment extends Fragment {
                             //去掉中括号
                             lastdata=lastdata.replace("[","");
                             lastdata=lastdata.replace("]","");
-                            String[] splitnum = lastdata.split(",");
 
-
-                            String[] splitlocation = key.split("|");
-                            if(splitlocation.length == 1){
-
-                            }
-
-
-//                            list.add(new Statitics(key, splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
-                            Log.v("YX", splitnum[0] + " " + splitnum[1] + " " + splitnum[2] + " " + splitnum[3] + " " + splitnum[4] + " " + splitnum[5]);
-
+                            stat.put(key,lastdata);
 
                         }
+                        Set set=stat.keySet();
+                        Object[] arr=set.toArray();
+                        Arrays.sort(arr);
+                        for(Object key:arr){
+                            String[] splitlocation = key.toString().split("\\|");//国家分开
+                            String[] splitnum = stat.get(key).split(",");//数字分开
+                            if(splitlocation.length == 1){//只有国家
+                                list.add(new Statitics( splitlocation[0],"","",splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
+                            }
+                            else if(splitlocation.length == 2) {
+                                list.add(new Statitics(splitlocation[0], splitlocation[1], "", splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
+                            }
+                            else if(splitlocation.length == 3){
+                                list.add(new Statitics( splitlocation[0],splitlocation[1],splitlocation[2],splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
 
+                            }
+                        }
 
+//                        //遍历hashmap
+//                        for(Map.Entry<String, String> entry : stat.entrySet()){
+//
+//                            String[] splitnum = entry.getValue().split(",");
+//                            String[] splitlocation = entry.getKey().split("\\|");
+//
+//                            if(splitlocation.length == 1){//只有国家
+//                                list.add(new Statitics( splitlocation[0],"","",splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
+//                            }
+//                            else if(splitlocation.length == 2) {
+//                                list.add(new Statitics(splitlocation[0], splitlocation[1], "", splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
+//                            }
+//                            else if(splitlocation.length == 3){
+//                                list.add(new Statitics( splitlocation[0],splitlocation[1],splitlocation[2],splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
+//
+//                            }
+//
+////                            System.out.println("key= "+entry.getKey()+" and value= "+entry.getValue());
+//
+//                        }
 
                         //加入表格
+//                        Column<String> nameTask = new Column<>("任务名称", "taskName",new MultiLineDrawFormat<String>(Utils.dip2px(88)));
+//                        Column<String> co = new MultiLineDrawFormat<String>(.dip2px(88));
                         Column<String> country = new Column<>("country", "country");
                         Column<String> province = new Column<>("province", "province");
                         Column<String> county = new Column<>("county", "county");
@@ -177,11 +170,14 @@ public class StatisticsFragment extends Fragment {
                         //设置该列当字段相同时自动合并
                         country.setAutoMerge(true);
                         province.setAutoMerge(true);
-                        TableData<Statitics> tableData = new TableData<>("疫情数据", list, country,province,country,confirmed, suspected, cured, dead, severe, risk);
+                        TableData<Statitics> tableData = new TableData<>("疫情数据", list, country,province,county,confirmed, suspected, cured, dead, severe, risk);
                         table.getConfig().setShowXSequence(false);
                         table.getConfig().setShowYSequence(false);
                         table.setTableData(tableData);
                         table.getConfig().setContentStyle(new FontStyle());
+                        table.getConfig().setMinTableWidth(10);
+//                        table.setSortColumn(country,false);
+
 
                     }
                 } catch (Exception e) {
