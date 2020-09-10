@@ -11,6 +11,7 @@
         android:textSize="8dp"
         android:layout_alignParentRight="true"
         android:background="@color/almost_white"
+        android:focusable="false"
         />
 
     <Button
@@ -21,6 +22,7 @@
         android:text="不感兴趣"
         android:layout_below="@+id/op_button"
         android:visibility="gone"
+        android:focusable="false"
         />
 
 

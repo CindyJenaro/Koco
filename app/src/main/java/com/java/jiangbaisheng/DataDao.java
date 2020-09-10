@@ -20,6 +20,9 @@ public interface DataDao { // DAO: Data Access Object
     @Query("SELECT * FROM Newsdata WHERE id= :id")
     Newsdata getbyid(int id);
 
+    @Query("SELECT * FROM Newsdata WHERE newsid= :newsid")
+    Newsdata getbyNewsId(String newsid);
+
     @Query("DELETE FROM Newsdata")
     void deleteAll();
     @Query("SELECT * FROM Newsdata ORDER BY ID")

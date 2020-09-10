@@ -1,5 +1,6 @@
 package com.java.jiangbaisheng;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class NewsItemAdapter extends SimpleAdapter {
     }
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -43,27 +45,41 @@ public class NewsItemAdapter extends SimpleAdapter {
         TextView title = view.findViewById(R.id.news_title);
         TextView date = view.findViewById(R.id.news_date);
         TextView type = view.findViewById(R.id.news_type);
-        TextView index = view.findViewById(R.id.news_index);
+        TextView id = view.findViewById(R.id.news_id);
 
 
         if(!list.get(position).get("title").equals(context.getString(R.string.end_of_list))){
 
-            title.setText((String)list.get(position).get("title"));
-            date.setText((String)list.get(position).get("date"));
-            type.setText((String)list.get(position).get("type"));
-            index.setText(list.get(position).get("index").toString());
+            try{
 
-            if((Boolean)list.get(position).get("viewed")){
+                title.setText((String)list.get(position).get("title"));
+                date.setText((String)list.get(position).get("date"));
+                type.setText((String)list.get(position).get("type"));
+                id.setText(list.get(position).get("id").toString());
 
-                title.setTextColor(context.getColor(R.color.gray));
+                // need to bring them back manually
+                title.setGravity(Gravity.LEFT);
+                view.setBackground(context.getDrawable(R.drawable.item_border));
 
-            }
+                if((Boolean)list.get(position).get("viewed")){
+
+                    title.setTextColor(context.getColor(R.color.gray));
+
+                } else{
+
+                    title.setTextColor(context.getColor(R.color.almost_black));
+
+                }
+            } catch (Exception e){}
+
+
 
         }else{
 
             title.setText((String)list.get(position).get("title"));
             date.setText("");
             type.setText("");
+            id.setText("");
             title.setTextColor(context.getColor(R.color.gray));
             title.setGravity(Gravity.CENTER);
             view.setBackgroundColor(context.getColor(R.color.almost_white));

@@ -43,7 +43,11 @@ public class MainActivity extends AppCompatActivity {
         Log.d("debug", "-------------------\nThe first debug message");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        delAll();
+
+//        try{
+//            delAll();
+//        } catch (Exception e) {}
+
         getnews();//获取新闻
 
         kocoVP = findViewById(R.id.view_pager);
@@ -60,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-
 
     }
 
@@ -146,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
 //            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 //        }
 //    }
-
 
     public void getnews(){
         handler.postDelayed(runnable,1000);
@@ -245,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject json = array.getJSONObject(i);    //取出数组中的对象
                             String j = json.toString();
-
                             String id= json.getString("_id");
                             String content= json.getString("content");
                             String time = json.getString("time");
@@ -268,4 +268,12 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try{
+            getCurrentFocus().invalidate();
+        } catch(Exception e){}
+
+    }
 }

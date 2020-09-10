@@ -12,6 +12,7 @@ import android.widget.*;
 import android.util.Log;
 import androidx.fragment.app.*;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,28 +40,37 @@ public class NewsListFragment extends Fragment {
 
         kocoLV = view.findViewById(R.id.news_list);
         SimpleAdapter kocoSA = new NewsItemAdapter(getActivity(), putData(),
-                R.layout.news_list_item, new String[]{"title", "date", "type", "index"},
-                new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_index});
+                R.layout.news_list_item, new String[]{"title", "date", "type", "id"},
+                new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_id});
         kocoLV.setAdapter(kocoSA);
         kocoLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                Log.d("debug", "item" + position + "clicked");
+                Log.d("debug", "item " + position + " clicked");
 
+                View currentItem = getViewByPosition(position, kocoLV);
+                TextView news_id_view = currentItem.findViewById(R.id.news_id);
+                String news_id = news_id_view.getText().toString();
                 Newsdata currentData = Newsdatabase.
-                        getInstance(getContext()).getNewsDao().getbyid(position);
+                        getInstance(getContext()).getNewsDao().getbyNewsId(news_id);
 
-                currentData.setViewed(true); // record viewed history
-
-                Intent intent = new Intent();
-                intent.setClass(getContext(), GetNewsDetailActivity.class);
 
                 try{
+                    currentData.setViewed(true); // record viewed history
+
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(), GetNewsDetailActivity.class);
+
                     JSONObject jobj = new JSONObject(currentData.getJson());
                     intent.putExtra("title", jobj.getString("title"));
-                    intent.putExtra("date", "日期：" + jobj.getString("date"));
-                    intent.putExtra("content", jobj.getString("content"));
+                    intent.putExtra("date", "日期：" + jobj.getString("time"));
+
+                    if(!jobj.getString("content").equals("")){
+                        intent.putExtra("content", jobj.getString("content"));
+                    } else{
+                        intent.putExtra("content", "暂无原文");
+                    }
 
                     if(!jobj.getString("source").equals("")){
                         intent.putExtra("source", "来源：" + jobj.getString("source"));
@@ -68,13 +78,18 @@ public class NewsListFragment extends Fragment {
                         intent.putExtra("source", "来源：未知网站");
                     }
 
-                    intent.putExtra("author", "作者：反正不是我"); // demo
+                    JSONArray authors = jobj.getJSONArray("authors");
+                    Log.d("debug", "It is a JSONArray");
+
+
+//                    intent.putExtra("author", "作者：" + author); // debugging
+                    getContext().startActivity(intent);
 
                 } catch (JSONException e) {
                     Log.d("debug", "JSONException occured!");
+                    e.printStackTrace();
                 }
 
-                getContext().startActivity(intent);
             }
         });
 
@@ -132,6 +147,7 @@ public class NewsListFragment extends Fragment {
     }
 
     public List<Map<String, Object>> putData(){
+
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 //        Map<String, Object> map1 = new HashMap<String, Object>();
@@ -139,11 +155,6 @@ public class NewsListFragment extends Fragment {
 //        map1.put("date", "2020-9-7");
 //        map1.put("type", "news");
 //        list.add(map1);
-//        list.add(map1);
-//        list.add(map1);
-//        list.add(map1);
-//        list.add(map1);
-//        list.add(map1); // test demo
 
 
         List<Newsdata> allUsers = Newsdatabase
@@ -156,14 +167,13 @@ public class NewsListFragment extends Fragment {
             Map<String, Object> map = new HashMap<>();
             Newsdata currentData = allUsers.get(idx);
             String id = currentData.getNewsid();
+            map.put("id", id);
             String title = currentData.getTitle();
             map.put("title", title);
             String date = "" + currentData.getTime();
             map.put("date", date);
             Boolean viewed = currentData.isViewed();
             map.put("viewed", viewed);
-            Integer index = currentData.getId();
-            map.put("index", index);
 
             String json = currentData.getJson();
             try{
@@ -183,5 +193,18 @@ public class NewsListFragment extends Fragment {
         noMoreItems.put("title", getString(R.string.end_of_list));
         list.add(noMoreItems);
         return list;
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        int firstListItemPosition = listView.getFirstVisiblePosition();
+        int lastListItemPosition = firstListItemPosition
+                + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 }

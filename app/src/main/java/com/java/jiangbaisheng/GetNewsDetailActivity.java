@@ -1,8 +1,10 @@
 package com.java.jiangbaisheng;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -67,6 +69,10 @@ public class GetNewsDetailActivity extends AppCompatActivity {
             if(bud.containsKey("content")){
                 TextView content = findViewById(R.id.detail_text);
                 content.setText(bud.getString("content"));
+                if(bud.getString("content").equals("暂无原文")){
+                    content.setGravity(Gravity.CENTER);
+                    content.setTextColor(getColor(R.color.gray));
+                }
             }
             if(bud.containsKey("source")){
                 TextView source = findViewById(R.id.detail_source);

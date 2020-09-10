@@ -15,6 +15,7 @@
         android:paddingTop="26dp"
         android:paddingBottom="10dp"
         android:layout_marginLeft="@dimen/item_marginleft"
+        android:gravity="left"
         android:text="钟南山发明新药起死回生    九成重症病人或因此获益"
         android:textSize="@dimen/title_textsize"
         android:textColor="@color/almost_black"
@@ -33,7 +34,7 @@
         />
 
     <TextView
-        android:id="@+id/news_index"
+        android:id="@+id/news_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -55,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/news_type"
         android:layout_alignRight="@+id/news_type"
+        android:focusable="false"
         />
 
 </RelativeLayout>
