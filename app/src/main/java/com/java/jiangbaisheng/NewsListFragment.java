@@ -39,7 +39,7 @@ public class NewsListFragment extends Fragment {
         kocoRV = view.findViewById(R.id.refreshable_view);
         kocoLV = view.findViewById(R.id.news_list);
         SimpleAdapter kocoSA = new NewsItemAdapter(getActivity(), putData(),
-                R.layout.news_list_item, new String[]{"title", "date", "type"},
+                R.layout.news_list_item, new String[]{"title", "date", "type", "viewed"},
                 new int[]{R.id.news_title, R.id.news_date, R.id.news_type});
         kocoLV.setAdapter(kocoSA);
 
@@ -97,47 +97,49 @@ public class NewsListFragment extends Fragment {
     public List<Map<String, Object>> putData(){
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("title", "钟南山发明新药起死回生    九成重症病人或因此获益");
-        map1.put("date", "2020-9-7");
-        map1.put("type", "news");
-        list.add(map1);
-        list.add(map1);
-        list.add(map1);
-        list.add(map1);
-        list.add(map1);
-        list.add(map1); // test demo
+//        Map<String, Object> map1 = new HashMap<String, Object>();
+//        map1.put("title", "钟南山发明新药起死回生    九成重症病人或因此获益");
+//        map1.put("date", "2020-9-7");
+//        map1.put("type", "news");
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1);
+//        list.add(map1); // test demo
 
 
-//        List<Newsdata> allUsers = Newsdatabase
-//                .getInstance(getActivity())
-//                .getNewsDao()
-//                .getall();
-//
-//        for(int idx = 1; idx < 17; idx++){
-//
-//            Map<String, Object> map = new HashMap<>();
-//            Newsdata currentData = allUsers.get(idx);
-//            String id = currentData.getNewsid();
-//            String title = currentData.getTitle();
-//            map.put("title", title);
-//            String date = "" + currentData.getTime();
-//            map.put("date", date);
-//
-//            String json = currentData.getJson();
-//            try{
-//                JSONObject jobj = new JSONObject(json);
-//                String type = jobj.getString("type");
-//                map.put("type", type);
-//            } catch(JSONException e) {
-//                Log.d("debug", "JSONException occured!");
-//                e.printStackTrace();
-//            }
-//
-//
-//            list.add(map);
-//        }
-//
+        List<Newsdata> allUsers = Newsdatabase
+                .getInstance(getActivity())
+                .getNewsDao()
+                .getall();
+
+        for(int idx = 1; idx < 17; idx++){
+
+            Map<String, Object> map = new HashMap<>();
+            Newsdata currentData = allUsers.get(idx);
+            String id = currentData.getNewsid();
+            String title = currentData.getTitle();
+            map.put("title", title);
+            String date = "" + currentData.getTime();
+            map.put("date", date);
+            Boolean viewed = currentData.isViewed();
+            map.put("viewed", viewed);
+
+            String json = currentData.getJson();
+            try{
+                JSONObject jobj = new JSONObject(json);
+                String type = jobj.getString("type");
+                map.put("type", type);
+            } catch(JSONException e) {
+                Log.d("debug", "JSONException occured!");
+                e.printStackTrace();
+            }
+
+
+            list.add(map);
+        }
+
         Map<String, Object> noMoreItems = new HashMap<>();
         noMoreItems.put("title", getString(R.string.end_of_list));
         list.add(noMoreItems);

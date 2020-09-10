@@ -51,6 +51,12 @@ public class NewsItemAdapter extends SimpleAdapter {
             date.setText((String)list.get(position).get("date"));
             type.setText((String)list.get(position).get("type"));
 
+            if((Boolean)list.get(position).get("viewed")){
+
+                title.setTextColor(context.getColor(R.color.gray));
+
+            }
+
         }else{
 
             title.setText((String)list.get(position).get("title"));
@@ -62,9 +68,6 @@ public class NewsItemAdapter extends SimpleAdapter {
             view.findViewById(R.id.unlike_buttonset).setVisibility(View.GONE);
 
         }
-
-
-
 
 
         return view;

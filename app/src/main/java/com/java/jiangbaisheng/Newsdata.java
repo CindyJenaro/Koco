@@ -15,13 +15,17 @@ public class Newsdata {
     private String title;
     private String content;
     private String time;
-//    private boolean viewed;
+    private boolean viewed = false;
 
-    public Newsdata() {
-
-//        viewed = false;
-
+    public boolean isViewed() {
+        return viewed;
     }
+
+    public void setViewed(boolean viewed) {
+        this.viewed = viewed;
+    }
+
+    public Newsdata() {}
 
     public String getJson() {
         return json;
@@ -78,6 +82,8 @@ public class Newsdata {
     public void setContent(String content) {
         this.content = content;
     }
+
+
 }
 
 
