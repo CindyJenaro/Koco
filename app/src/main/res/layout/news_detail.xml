@@ -98,8 +98,11 @@
                 android:textSize="16dp"
                 android:textColor="@color/moderate_black"
                 android:text="我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘"
-                android:layout_below="@id/detail_title"
-                android:padding="@dimen/detail_padding"
+                android:layout_below="@id/detail_author"
+                android:paddingLeft="@dimen/detail_padding"
+                android:paddingRight="@dimen/detail_padding"
+                android:paddingBottom="@dimen/detail_padding"
+                android:paddingTop="20dp"
                 />
 
             <TextView

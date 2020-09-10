@@ -78,11 +78,20 @@ public class NewsListFragment extends Fragment {
                         intent.putExtra("source", "来源：未知网站");
                     }
 
-                    JSONArray authors = jobj.getJSONArray("authors");
-                    Log.d("debug", "It is a JSONArray");
+                    JSONArray jauthors = jobj.getJSONArray("authors");
+                    String authors = "";
 
+                    for(int i = 0; i < jauthors.length(); i++) {
 
-//                    intent.putExtra("author", "作者：" + author); // debugging
+                        JSONObject jauthor = jauthors.getJSONObject(i);
+                        if(i == 0)
+                            authors += jauthor.getString("name");
+                        else
+                            authors += ", " + jauthor.getString("name");
+
+                    }
+
+                    intent.putExtra("author", "作者：" + authors);
                     getContext().startActivity(intent);
 
                 } catch (JSONException e) {
