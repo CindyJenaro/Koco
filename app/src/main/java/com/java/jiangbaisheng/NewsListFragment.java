@@ -28,7 +28,7 @@ public class NewsListFragment extends Fragment {
     RefreshableView kocoRV;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState){
 
         Log.d("debug","in onCreateView, NewsListFragment");
         view = inflater.inflate(R.layout.news_list_fragment, container, false);
@@ -36,13 +36,50 @@ public class NewsListFragment extends Fragment {
         kocoSV = view.findViewById(R.id.search);
         initSearchView();
 
-        kocoRV = view.findViewById(R.id.refreshable_view);
+
         kocoLV = view.findViewById(R.id.news_list);
         SimpleAdapter kocoSA = new NewsItemAdapter(getActivity(), putData(),
-                R.layout.news_list_item, new String[]{"title", "date", "type", "viewed"},
-                new int[]{R.id.news_title, R.id.news_date, R.id.news_type});
+                R.layout.news_list_item, new String[]{"title", "date", "type", "index"},
+                new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_index});
         kocoLV.setAdapter(kocoSA);
+        kocoLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
+                Log.d("debug", "item" + position + "clicked");
+
+                Newsdata currentData = Newsdatabase.
+                        getInstance(getContext()).getNewsDao().getbyid(position);
+
+                currentData.setViewed(true); // record viewed history
+
+                Intent intent = new Intent();
+                intent.setClass(getContext(), GetNewsDetailActivity.class);
+
+                try{
+                    JSONObject jobj = new JSONObject(currentData.getJson());
+                    intent.putExtra("title", jobj.getString("title"));
+                    intent.putExtra("date", "日期：" + jobj.getString("date"));
+                    intent.putExtra("content", jobj.getString("content"));
+
+                    if(!jobj.getString("source").equals("")){
+                        intent.putExtra("source", "来源：" + jobj.getString("source"));
+                    } else{
+                        intent.putExtra("source", "来源：未知网站");
+                    }
+
+                    intent.putExtra("author", "作者：反正不是我"); // demo
+
+                } catch (JSONException e) {
+                    Log.d("debug", "JSONException occured!");
+                }
+
+                getContext().startActivity(intent);
+            }
+        });
+
+
+        kocoRV = view.findViewById(R.id.refreshable_view);
         kocoRV.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
             @Override // overriding child interface's method
             public void onRefresh() {
@@ -125,6 +162,8 @@ public class NewsListFragment extends Fragment {
             map.put("date", date);
             Boolean viewed = currentData.isViewed();
             map.put("viewed", viewed);
+            Integer index = currentData.getId();
+            map.put("index", index);
 
             String json = currentData.getJson();
             try{

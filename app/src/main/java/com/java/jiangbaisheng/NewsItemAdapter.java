@@ -43,6 +43,7 @@ public class NewsItemAdapter extends SimpleAdapter {
         TextView title = view.findViewById(R.id.news_title);
         TextView date = view.findViewById(R.id.news_date);
         TextView type = view.findViewById(R.id.news_type);
+        TextView index = view.findViewById(R.id.news_index);
 
 
         if(!list.get(position).get("title").equals(context.getString(R.string.end_of_list))){
@@ -50,6 +51,7 @@ public class NewsItemAdapter extends SimpleAdapter {
             title.setText((String)list.get(position).get("title"));
             date.setText((String)list.get(position).get("date"));
             type.setText((String)list.get(position).get("type"));
+            index.setText(list.get(position).get("index").toString());
 
             if((Boolean)list.get(position).get("viewed")){
 
