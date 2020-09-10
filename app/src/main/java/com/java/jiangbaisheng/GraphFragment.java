@@ -21,7 +21,7 @@ public class GraphFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.graph_fragment, container, false);
         String keyword = "病毒";
-        getgraphdata(keyword);
+//        getgraphdata(keyword);
         return view;
     }
 
