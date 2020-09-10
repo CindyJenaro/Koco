@@ -34,7 +34,12 @@ import java.util.*;
 public class MainActivity extends AppCompatActivity {
     ViewPager kocoVP;
     TabLayout kocoTL;
-    String newsjson=null;
+    ArrayList<Fragment> kocoFrags;
+    NewsListFragment newsListFragment;
+    StatisticsFragment statisticsFragment;
+    GraphFragment graphFragment;
+    AcademicFragment academicFragment;
+    String newsjson = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
             kocoTL.addTab(kocoTL.newTab().setText(titles.get(i)));
         }
 
-        ArrayList<Fragment> kocoFrags = new ArrayList<>();
-        kocoFrags.add(new NewsListFragment());
-        kocoFrags.add(new StatisticsFragment());
-        kocoFrags.add(new GraphFragment());
-        kocoFrags.add(new AcademicFragment());
+        kocoFrags = new ArrayList<>();
+        kocoFrags.add(newsListFragment = new NewsListFragment());
+        kocoFrags.add(statisticsFragment = new StatisticsFragment());
+        kocoFrags.add(graphFragment = new GraphFragment());
+        kocoFrags.add(academicFragment = new AcademicFragment());
 
         FragmentAdapter kocoFPA = new FragmentAdapter(getSupportFragmentManager(), kocoFrags, titles);
         kocoVP.setAdapter(kocoFPA);
@@ -94,6 +99,19 @@ public class MainActivity extends AppCompatActivity {
         // set adapter for TabLayout
         kocoTL.setTabsFromPagerAdapter(kocoFPA);
 
+    }
+
+    public void reloadNewsListFragment(){
+
+        if (kocoFrags.contains(newsListFragment)){
+
+            NewsListFragment lastNewsListFragment = newsListFragment;
+            newsListFragment = new NewsListFragment(); // needs time
+            kocoFrags.set(0, newsListFragment);
+            getSupportFragmentManager().beginTransaction().
+                    remove(lastNewsListFragment).commitAllowingStateLoss();
+
+        }
     }
 
     // internal class of MainActivity
@@ -296,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         try{
-            getCurrentFocus().invalidate();
+//            reloadNewsListFragment();
         } catch(Exception e){}
 
     }
