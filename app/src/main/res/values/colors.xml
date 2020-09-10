@@ -8,4 +8,5 @@
     <color name="stressKC">#000000</color>
     <color name="almost_black">#111111</color>
     <color name="moderate_black">#222222</color>
+    <color name="gray">#888888</color>
 </resources>

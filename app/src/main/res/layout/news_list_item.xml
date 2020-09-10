@@ -36,13 +36,14 @@
         android:id="@+id/news_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="www.github.com"
+        android:text="news"
         android:gravity="right"
         android:layout_below="@id/news_title"
         android:paddingRight="@dimen/source_padding_right"
         />
 
     <com.java.jiangbaisheng.UnlikeButtonSet
+        android:id="@+id/unlike_buttonset"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/news_type"

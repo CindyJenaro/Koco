@@ -15,8 +15,13 @@ public class Newsdata {
     private String title;
     private String content;
     private String time;
+//    private boolean viewed;
 
-    public Newsdata() { }
+    public Newsdata() {
+
+//        viewed = false;
+
+    }
 
     public String getJson() {
         return json;
