@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ public class GetNewsDetailActivity extends AppCompatActivity {
 
     Button returnBtn;
     FloatingActionButton shareBtn;
+    private IWXAPI api;
+    private static final int THUMB_SIZE = 150;
+    private static final String APP_IE = "wx0e6dee95bbf7795c";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,10 +49,12 @@ public class GetNewsDetailActivity extends AppCompatActivity {
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "You died.", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "分享至微信", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show(); // demo
             }
         });
+
+        initSharingMethod();
 
         Bundle bud = getIntent().getExtras();
 
@@ -79,6 +85,10 @@ public class GetNewsDetailActivity extends AppCompatActivity {
                 source.setText(bud.getString("source"));
             }
         }
+
+    }
+
+    public void initSharingMethod(){
 
     }
 
