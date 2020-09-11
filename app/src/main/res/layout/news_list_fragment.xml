@@ -23,7 +23,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/theme"
+            >
 
             <Button
                 android:id="@+id/type_news"
@@ -50,11 +52,13 @@
 
         <LinearLayout
             android:id="@+id/type_add_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:visibility="gone"
+            android:background="@color/theme"
+            android:gravity="center"
             >
 
             <Button
@@ -62,12 +66,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="news ＋ "
+                android:visibility="gone"
                 />
             <Button
                 android:id="@+id/type_add_paper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="paper ＋ "
+                android:visibility="gone"
                 />
 
         </LinearLayout>

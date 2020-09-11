@@ -1,6 +1,7 @@
 package com.java.jiangbaisheng;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.*;
 
@@ -39,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
     StatisticsFragment statisticsFragment;
     GraphFragment graphFragment;
     AcademicFragment academicFragment;
+    ImageButton refreshBtn;
     String newsjson = null;
+    FragmentAdapter kocoFPA;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +64,26 @@ public class MainActivity extends AppCompatActivity {
         kocoVP = findViewById(R.id.view_pager);
         kocoTL = findViewById(R.id.tabs);
 
-        initFragment();
+        loadFragments();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        refreshBtn = findViewById(R.id.refresh_button);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "You died.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+
+                Log.d("debug", "refreshBtn onClick");
+                kocoFPA.notifyDataSetChanged();
+                newsListFragment.kocoSA.notifyDataSetChanged();
+
             }
         });
 
+
+
     }
 
-    private void initFragment(){
-        Log.d("debug", "in initFragment");
+    private void loadFragments(){
 
         List<String> titles = new ArrayList<>();
         titles.add("新闻列表");
@@ -91,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         kocoFrags.add(graphFragment = new GraphFragment());
         kocoFrags.add(academicFragment = new AcademicFragment());
 
-        FragmentAdapter kocoFPA = new FragmentAdapter(getSupportFragmentManager(), kocoFrags, titles);
+        kocoFPA = new FragmentAdapter(getSupportFragmentManager(), kocoFrags, titles);
         kocoVP.setAdapter(kocoFPA);
         kocoVP.setCurrentItem(0);
         // connect TabLayout with ViewPager
@@ -101,18 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void reloadNewsListFragment(){
 
-        if (kocoFrags.contains(newsListFragment)){
-
-            NewsListFragment lastNewsListFragment = newsListFragment;
-            newsListFragment = new NewsListFragment(); // needs time
-            kocoFrags.set(0, newsListFragment);
-            getSupportFragmentManager().beginTransaction().
-                    remove(lastNewsListFragment).commitAllowingStateLoss();
-
-        }
-    }
 
     // internal class of MainActivity
     class FragmentAdapter extends FragmentPagerAdapter{
@@ -158,15 +157,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        if (imm != null) {
-//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//        }
-//    }
-
     public void getnews(){
         handler.postDelayed(runnable,1000);
     }
@@ -175,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            //每次获取两百条
 
+            //每次获取两百条
             getnewsurl("https://covid-dashboard.aminer.cn/api/events/list?type=paper&page="+1+"&size=200");
             handler.postDelayed(this, 300000);//五分钟之后获取新的新闻
         }
@@ -207,20 +197,12 @@ public class MainActivity extends AppCompatActivity {
                 .getNewsDao()
                 .insertdatanochange(newsnochange);
 
-//        Newsdata news2 =  Newsdatabase.getInstance(this).getNewsDao().getbyid(1);
-//        Newsdatabase.getInstance(this).getNewsDao().deletedata(news2);
-
-
     }
 
 
 
     private void query() {
         Log.v("YX","In query!");
-//        List<Newsdata> allUsers = Newsdatabase
-//                .getInstance(this)
-//                .getNewsDao()
-//                .getall();
 
         List<Newsdatanochange> all = Newsdatabase
                 .getInstance(this)
@@ -233,25 +215,6 @@ public class MainActivity extends AppCompatActivity {
             Log.v("YX","查到了id："+Integer.toString(title));
             Log.v("YX","type是"+type);
         }
-
-//        List<Newsdata> paper = Newsdatabase
-//                .getInstance(this)
-//                .getNewsDao()
-//                .getwithtype("paper");
-
-//        for(int i=0;i<paper.size();i++){
-//            String title=allUsers.get(i).getTitle();
-//            String id=allUsers.get(i).getType();
-//            Log.v("YX","查到了title："+title);
-//            Log.v("YX","type是"+id);
-//        }
-//
-//        for(int i=0;i<allUsers.size();i++){
-//            String id=allUsers.get(i).getNewsid();
-//            String title=allUsers.get(i).getTitle();
-//            Log.v("YX","查到"+Integer.toString(i)+"的id:"+id);
-//            Log.v("YX","查到了title："+title);
-//        }
 
     }
 
@@ -314,7 +277,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         try{
-//            reloadNewsListFragment();
+
+                kocoFPA.notifyDataSetChanged();
+                newsListFragment.kocoSA.notifyDataSetChanged();
+
         } catch(Exception e){}
 
     }

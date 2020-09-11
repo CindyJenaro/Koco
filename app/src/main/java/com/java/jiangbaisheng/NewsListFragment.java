@@ -28,6 +28,7 @@ public class NewsListFragment extends Fragment {
     SearchView kocoSV;
     ListView kocoLV;
     RefreshableView kocoRV;
+    SimpleAdapter kocoSA;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState){
@@ -36,74 +37,11 @@ public class NewsListFragment extends Fragment {
         view = inflater.inflate(R.layout.news_list_fragment, container, false);
 
         kocoSV = view.findViewById(R.id.search);
+        kocoLV = view.findViewById(R.id.news_list);
+
         initSearchView();
         initTypeList();
-
-        kocoLV = view.findViewById(R.id.news_list);
-        SimpleAdapter kocoSA = new NewsItemAdapter(getActivity(), putData(),
-                R.layout.news_list_item, new String[]{"title", "date", "type", "id"},
-                new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_id});
-        kocoLV.setAdapter(kocoSA);
-        kocoLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                Log.d("debug", "item " + position + " clicked");
-
-                View currentItem = getViewByPosition(position, kocoLV);
-                TextView news_title_view = currentItem.findViewById(R.id.news_title);
-                news_title_view.setTextColor(getContext().getColor(R.color.gray));
-                TextView news_id_view = currentItem.findViewById(R.id.news_id);
-                String news_id = news_id_view.getText().toString();
-                Newsdata currentData = Newsdatabase.
-                        getInstance(getContext()).getNewsDao().getbyNewsId(news_id);
-
-
-                try{
-                    currentData.setViewed(true); // record viewed history
-
-                    Intent intent = new Intent();
-                    intent.setClass(getContext(), GetNewsDetailActivity.class);
-
-                    JSONObject jobj = new JSONObject(currentData.getJson());
-                    intent.putExtra("title", jobj.getString("title"));
-                    intent.putExtra("date", "日期：" + jobj.getString("time"));
-
-                    if(!jobj.getString("content").equals("")){
-                        intent.putExtra("content", jobj.getString("content"));
-                    } else{
-                        intent.putExtra("content", "暂无原文");
-                    }
-
-                    if(!jobj.getString("source").equals("")){
-                        intent.putExtra("source", "来源：" + jobj.getString("source"));
-                    } else{
-                        intent.putExtra("source", "来源：未知网站");
-                    }
-
-                    JSONArray jauthors = jobj.getJSONArray("authors");
-                    String authors = "";
-
-                    for(int i = 0; i < jauthors.length(); i++) {
-
-                        JSONObject jauthor = jauthors.getJSONObject(i);
-                        if(i == 0)
-                            authors += jauthor.getString("name");
-                        else
-                            authors += ", " + jauthor.getString("name");
-
-                    }
-
-                    intent.putExtra("author", "作者：" + authors);
-                    getContext().startActivity(intent);
-
-                } catch (JSONException e) {
-                    Log.d("debug", "JSONException occured!");
-                    e.printStackTrace();
-                }
-
-            }
-        });
+        initListView();
 
 
         kocoRV = view.findViewById(R.id.refreshable_view);
@@ -115,7 +53,7 @@ public class NewsListFragment extends Fragment {
                     Thread.sleep(3000);
                     MainActivity mainActivity = (MainActivity) getActivity();
                     mainActivity.getnews();
-//                    mainActivity.reloadNewsListFragment();
+                    kocoSA.notifyDataSetChanged();
 
                 } catch(Exception e){
                     e.printStackTrace();
@@ -166,16 +104,17 @@ public class NewsListFragment extends Fragment {
 
         final Button typeNews = view.findViewById(R.id.type_news);
         final Button typePaper = view.findViewById(R.id.type_paper);
-        Button typeAdd = view.findViewById(R.id.type_add);
+        final Button typeAdd = view.findViewById(R.id.type_add);
         final LinearLayout typeAddList = view.findViewById(R.id.type_add_list);
-        Button typeAddNews = view.findViewById(R.id.type_add_news);
-        Button typeAddPaper = view.findViewById(R.id.type_add_paper);
+        final Button typeAddNews = view.findViewById(R.id.type_add_news);
+        final Button typeAddPaper = view.findViewById(R.id.type_add_paper);
 
         typeNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 typeNews.setVisibility(View.GONE);
+                typeAddNews.setVisibility(View.VISIBLE);
                 // todo
 
             }
@@ -186,6 +125,7 @@ public class NewsListFragment extends Fragment {
             public void onClick(View view) {
 
                 typePaper.setVisibility(View.GONE);
+                typeAddPaper.setVisibility(View.VISIBLE);
                 // todo
 
             }
@@ -207,6 +147,7 @@ public class NewsListFragment extends Fragment {
 
                 typeNews.setVisibility(View.VISIBLE);
                 typeAddList.setVisibility(View.GONE);
+                typeAddNews.setVisibility(View.GONE);
 
             }
         });
@@ -217,6 +158,84 @@ public class NewsListFragment extends Fragment {
 
                 typePaper.setVisibility(View.VISIBLE);
                 typeAddList.setVisibility(View.GONE);
+                typeAddPaper.setVisibility(View.GONE);
+
+            }
+        });
+
+    }
+
+    private void initListView(){
+
+        kocoSA = new NewsItemAdapter(getActivity(), putData(),
+                R.layout.news_list_item, new String[]{"title", "date", "type", "id"},
+                new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_id});
+        kocoLV.setAdapter(kocoSA);
+        kocoLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Log.d("debug", "item " + position + " clicked");
+
+                View currentItem = getViewByPosition(position, kocoLV);
+                TextView news_title_view = currentItem.findViewById(R.id.news_title);
+                news_title_view.setTextColor(getContext().getColor(R.color.gray));
+                TextView news_id_view = currentItem.findViewById(R.id.news_id);
+                String news_id = news_id_view.getText().toString();
+                Newsdata currentData = Newsdatabase.
+                        getInstance(getContext()).getNewsDao().getbyNewsId(news_id);
+                Log.d("debug", "clicked data ID:");
+                Log.d("debug", currentData.getNewsid());
+
+                try{
+
+                    currentData.setViewed(true); // record viewed history
+                    if(currentData.isViewed()){
+                        Log.d("debug", "currentData is viewed:");
+                        Log.d("debug", currentData.getNewsid());
+                    }
+
+
+
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(), GetNewsDetailActivity.class);
+
+                    JSONObject jobj = new JSONObject(currentData.getJson());
+                    intent.putExtra("title", jobj.getString("title"));
+                    intent.putExtra("date", "日期：" + jobj.getString("time"));
+
+                    if(!jobj.getString("content").equals("")){
+                        intent.putExtra("content", jobj.getString("content"));
+                    } else{
+                        intent.putExtra("content", "暂无原文");
+                    }
+
+                    if(!jobj.getString("source").equals("")){
+                        intent.putExtra("source", "来源：" + jobj.getString("source"));
+                    } else{
+                        intent.putExtra("source", "来源：未知网站");
+                    }
+
+                    JSONArray jauthors = jobj.getJSONArray("authors");
+                    String authors = "";
+
+                    for(int i = 0; i < jauthors.length(); i++) {
+
+                        JSONObject jauthor = jauthors.getJSONObject(i);
+                        if(i == 0)
+                            authors += jauthor.getString("name");
+                        else
+                            authors += ", " + jauthor.getString("name");
+
+                    }
+
+                    intent.putExtra("author", "作者：" + authors);
+                    getContext().startActivity(intent);
+
+                } catch (JSONException e) {
+                    Log.d("debug", "JSONException occured!");
+                    e.printStackTrace();
+                }
 
             }
         });
