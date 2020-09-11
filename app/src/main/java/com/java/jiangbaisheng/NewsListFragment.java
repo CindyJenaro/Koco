@@ -2,12 +2,9 @@ package com.java.jiangbaisheng;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.*;
 import android.util.Log;
 import androidx.fragment.app.*;
@@ -30,9 +27,15 @@ public class NewsListFragment extends Fragment {
     ListView kocoLV;
     RefreshableView kocoRV;
     NewsItemAdapter kocoSA;
+    Button kocoHistoryBtn;
+    ListView historyListView;
+    List<String> searchHistory;
+    SimpleAdapter kocoHistoryAdapter;
+    List<Map<String, Object>> historyEntryList;
     List<Map<String, Object>> newsEntryList;
     int currentPointer = 1;
     boolean first_called_putdata = true;
+    boolean searchingFlag = false;
 
     int typeFlag = NewsItemAdapter.BOTH;
 
@@ -45,6 +48,7 @@ public class NewsListFragment extends Fragment {
         kocoSV = view.findViewById(R.id.search);
         kocoLV = view.findViewById(R.id.news_list);
 
+        historyEntryList = new LinkedList<Map<String, Object>>();
         newsEntryList = new LinkedList<Map<String, Object>>();
 
         initSearchView();
@@ -69,6 +73,13 @@ public class NewsListFragment extends Fragment {
                         }
                     });
 
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            kocoHistoryAdapter.notifyDataSetChanged(); //Ui线程中更新listview
+                        }
+                    });
+
                 } catch(Exception e){
                     e.printStackTrace();
                 }
@@ -82,6 +93,44 @@ public class NewsListFragment extends Fragment {
 
     private void initSearchView(){
 
+        searchHistory = new LinkedList<>();
+        kocoHistoryBtn = view.findViewById(R.id.toggle_history);
+        historyListView = view.findViewById(R.id.history_list);
+        kocoHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(historyListView.getVisibility() == View.VISIBLE){
+                    historyListView.setVisibility(View.GONE);
+                } else if(historyListView.getVisibility() == View.GONE){
+                    historyListView.setVisibility(View.VISIBLE);
+                    kocoSV.setIconified(false);
+                    putHistoryData();
+                    kocoHistoryAdapter.notifyDataSetChanged();
+                }
+
+            }
+        });
+
+        kocoHistoryAdapter = new SimpleAdapter(getActivity(), putHistoryData(),
+                R.layout.search_history_item, new String[]{"history_text"},
+                new int[]{R.id.history_item_text});
+
+        historyListView.setAdapter(kocoHistoryAdapter);
+
+        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                View currentItem = getViewByPosition(position, historyListView);
+                TextView currentText = currentItem.findViewById(R.id.history_item_text);
+                kocoSV.setQuery(currentText.getText(), true);
+
+                Log.d("debug", "item " + position + " clicked");
+
+            }
+        });
+
         kocoSV.setSubmitButtonEnabled(true);
         kocoSV.setQueryHint("mdzz");
         kocoSV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -93,6 +142,13 @@ public class NewsListFragment extends Fragment {
 
                 if (kocoSV != null) {
 
+                    if(!searchHistory.contains(query)){
+                        searchHistory.add(0, query);
+                    }
+
+                    putHistoryData();
+                    Log.d("debug", "size of searchHistory: " + searchHistory.size());
+
                     InputMethodManager imm = (InputMethodManager)getActivity().
                             getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
@@ -100,6 +156,41 @@ public class NewsListFragment extends Fragment {
                         imm.hideSoftInputFromWindow(kocoSV.getWindowToken(), 0);
                     }
                     kocoSV.clearFocus();
+
+                    MainActivity mainActivity = (MainActivity)getActivity();
+                    ArrayList<String> newsIds = mainActivity.findnewsbykey(query);
+                    newsEntryList.clear();
+                    for(String newsid : newsIds){
+
+                        Newsdata currentData = Newsdatabase.
+                                getInstance(getContext()).getNewsDao().getbyNewsId(newsid);
+
+                        Map<String, Object> map = new HashMap<>();
+                        String id = currentData.getNewsid();
+                        map.put("id", id);
+                        String title = currentData.getTitle();
+                        map.put("title", title);
+                        String date = "" + currentData.getTime();
+                        map.put("date", date);
+                        Boolean viewed = currentData.isViewed();
+                        map.put("viewed", viewed);
+
+                        String json = currentData.getJson();
+                        try{
+                            JSONObject jobj = new JSONObject(json);
+                            String type = jobj.getString("type");
+                            map.put("type", type);
+                        } catch(JSONException e) {
+                            Log.d("debug", "JSONException occured!");
+                            e.printStackTrace();
+                        }
+
+                        newsEntryList.add(0, map);
+                    }
+
+                    kocoSA.notifyDataSetChanged();
+                    kocoHistoryAdapter.notifyDataSetChanged();
+
                 }
 
                 return true;
@@ -111,6 +202,7 @@ public class NewsListFragment extends Fragment {
             }
 
         });
+
 
     }
 
@@ -218,12 +310,18 @@ public class NewsListFragment extends Fragment {
 
                 try{
 
-                    currentData.setViewed(true); // record viewed history
-                    if(currentData.isViewed()){
-                        Log.d("debug", "currentData is viewed:");
-                        Log.d("debug", currentData.getNewsid());
-                    }
+//                    currentData.setViewed(true); // record viewed history
+//                    if(currentData.isViewed()){
+//                        Log.d("debug", "currentData is viewed:");
+//                        Log.d("debug", currentData.getNewsid());
+//                    }
 
+                    Log.d("debug", "" + currentData.isViewed());
+                    currentData.setViewed(true);
+                    Newsdatabase.getInstance(getContext()).getNewsDao().insertdata(currentData);
+                    Log.d("debug", "" + currentData.isViewed());
+                    Log.d("debug", "" + Newsdatabase.getInstance(getContext()).
+                            getNewsDao().getbyNewsId(currentData.getNewsid()).isViewed());
 
                     Intent intent = new Intent();
                     intent.setClass(getContext(), GetNewsDetailActivity.class);
@@ -282,7 +380,6 @@ public class NewsListFragment extends Fragment {
 //        newsEntryList.add(0, map1);
 
 
-
         List<Newsdata> allUsers = Newsdatabase
                 .getInstance(getActivity())
                 .getNewsDao()
@@ -291,33 +388,42 @@ public class NewsListFragment extends Fragment {
 
         try{
 
-            for(int idx = 0 + currentPointer; idx < 17 + currentPointer; idx++){
+            if(searchingFlag == false){
 
-                Map<String, Object> map = new HashMap<>();
-                Newsdata currentData = allUsers.get(idx);
-                String id = currentData.getNewsid();
-                map.put("id", id);
-                String title = currentData.getTitle();
-                map.put("title", title);
-                String date = "" + currentData.getTime();
-                map.put("date", date);
-                Boolean viewed = currentData.isViewed();
-                map.put("viewed", viewed);
+                for(int idx = 0 + currentPointer; idx < 17 + currentPointer; idx++){
 
-                String json = currentData.getJson();
-                try{
-                    JSONObject jobj = new JSONObject(json);
-                    String type = jobj.getString("type");
-                    map.put("type", type);
-                } catch(JSONException e) {
-                    Log.d("debug", "JSONException occured!");
-                    e.printStackTrace();
+                    Map<String, Object> map = new HashMap<>();
+                    Newsdata currentData = allUsers.get(idx);
+                    String id = currentData.getNewsid();
+                    map.put("id", id);
+                    String title = currentData.getTitle();
+                    map.put("title", title);
+                    String date = "" + currentData.getTime();
+                    map.put("date", date);
+                    Boolean viewed = currentData.isViewed();
+                    map.put("viewed", viewed);
+
+                    String json = currentData.getJson();
+                    try{
+                        JSONObject jobj = new JSONObject(json);
+                        String type = jobj.getString("type");
+                        map.put("type", type);
+                    } catch(JSONException e) {
+                        Log.d("debug", "JSONException occured!");
+                        e.printStackTrace();
+                    }
+
+                    newsEntryList.add(0, map);
                 }
 
-                newsEntryList.add(0, map);
+                currentPointer += 17;
+
+            } else{
+
+                // don't put any data in; data is already in the newsEntryList
+                searchingFlag = false;
             }
 
-            currentPointer += 17;
 
         } catch (ArrayIndexOutOfBoundsException e){
 
@@ -340,6 +446,26 @@ public class NewsListFragment extends Fragment {
         }
 
         return newsEntryList;
+    }
+
+    public List<Map<String, Object>> putHistoryData(){
+
+        Log.d("debug", "in putHistoryData(again)");
+
+        historyEntryList.clear();
+
+        for(int idx = 0; idx < searchHistory.size(); idx++){
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("history_text", searchHistory.get(idx));
+            historyEntryList.add(0, map);
+
+        }
+
+        Log.d("debug", "size of historyEntryList: " + historyEntryList.size());
+
+        return historyEntryList;
+
     }
 
     public View getViewByPosition(int pos, ListView listView) {

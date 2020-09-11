@@ -79,22 +79,22 @@ public class NewsItemAdapter extends SimpleAdapter {
                 if(viewed.getText().equals(new Boolean(true).toString())){
 
 //                    if(id.getText().equals("5f4e44ba9fced0a24b5bbc2f")){
-                    if(true){
-                        Log.d("debug", "in Adapter considered viewed:");
-                        Log.d("debug", id.getText().toString());
-                        Log.d("debug", "");
-                    }
+//                    if(true){
+//                        Log.d("debug", "in Adapter considered viewed:");
+//                        Log.d("debug", id.getText().toString());
+//                        Log.d("debug", "");
+//                    }
 
                     title.setTextColor(context.getColor(R.color.gray));
 
                 } else{
 
 //                    if(id.getText().equals("5f4e44ba9fced0a24b5bbc2f")){
-                    if(true){
-                        Log.d("debug", "in Adapter considered not viewed:");
-                        Log.d("debug", id.getText().toString());
-                        Log.d("debug", "");
-                    }
+//                    if(true){
+//                        Log.d("debug", "in Adapter considered not viewed:");
+//                        Log.d("debug", id.getText().toString());
+//                        Log.d("debug", "");
+//                    }
                     title.setTextColor(context.getColor(R.color.almost_black));
 
                 }

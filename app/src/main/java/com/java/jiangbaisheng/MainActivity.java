@@ -56,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try{
-            delAll();
-            getnews(); //获取新闻
+            delAll(); // 清空数据库
+            getnews(); // 从服务器端获取新闻
         } catch (Exception e) {}
-
 
 
         kocoVP = findViewById(R.id.view_pager);
@@ -286,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public  ArrayList<String> findnewsbykey(String key){
+    public ArrayList<String> findnewsbykey(String key){
         ArrayList<String> newslist = new ArrayList<String>();
 
         List<Newsdata> allnews = Newsdatabase
