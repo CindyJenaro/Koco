@@ -53,7 +53,6 @@ public class GraphItemAdapter extends SimpleAdapter {
 
 
         TextView title = view.findViewById(R.id.entity_title);
-        ImageView img = view.findViewById(R.id.entity_img);
         TextView abstractInfo = view.findViewById(R.id.entity_abstract);
         ListView propertiesList = view.findViewById(R.id.entity_properties_list);
         ListView parentEntitiesList = view.findViewById(R.id.parent_entities_list);
@@ -61,8 +60,6 @@ public class GraphItemAdapter extends SimpleAdapter {
 
         title.setText((String)list.get(position).get("title"));
         abstractInfo.setText((String)list.get(position).get("abstractInfo"));
-
-        // img todo
 
         try{
 

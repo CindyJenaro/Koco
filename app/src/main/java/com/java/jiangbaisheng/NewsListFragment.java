@@ -340,10 +340,19 @@ public class NewsListFragment extends Fragment {
                     for(int i = 0; i < jauthors.length(); i++) {
 
                         JSONObject jauthor = jauthors.getJSONObject(i);
-                        if(i == 0)
-                            authors += jauthor.getString("name");
-                        else
-                            authors += ", " + jauthor.getString("name");
+                        if(i == 0){
+                            if(jauthor.has("name"))
+                                authors += jauthor.getString("name");
+                            else if(jauthor.has("name_zh"))
+                                authors += jauthor.getString("name_zh");
+                        }
+
+                        else{
+                            if(jauthor.has("name"))
+                                authors += ", " + jauthor.getString("name");
+                            else if(jauthor.has("name_zh"))
+                                authors += ", " + jauthor.getString("name_zh");
+                        }
 
                     }
 

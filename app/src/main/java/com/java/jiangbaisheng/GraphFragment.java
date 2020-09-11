@@ -88,8 +88,8 @@ public class GraphFragment extends Fragment {
     private void initListView(){
 
         kocoGA = new GraphItemAdapter(getActivity(), getgraphdata(""),
-                R.layout.entity_item, new String[]{"title", "img", "abstractInfo", "covid"},
-                new int[]{R.id.entity_title, R.id.entity_img, R.id.entity_abstract});
+                R.layout.entity_item, new String[]{"title", "abstractInfo", "covid"},
+                new int[]{R.id.entity_title, R.id.entity_abstract});
 
         entityList.setAdapter(kocoGA);
 
@@ -138,10 +138,8 @@ public class GraphFragment extends Fragment {
                                 Map<String, Object> mapOfEntity = new HashMap<>();
 
                                 JSONObject currentEntityJson = array.getJSONObject(i);
-                                String title = currentEntityJson.getString("label");     //实体名称
+                                String title = currentEntityJson.getString("label");
                                 mapOfEntity.put("title", title);
-                                String img = currentEntityJson.getString("img");
-                                mapOfEntity.put("img", img);
 
                                 String abstractInfo = currentEntityJson.getString("abstractInfo");
                                 JSONObject abstractJson = new JSONObject(abstractInfo);
