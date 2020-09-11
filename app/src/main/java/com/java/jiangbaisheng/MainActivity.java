@@ -278,7 +278,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         try{
 
-                kocoFPA.notifyDataSetChanged();
+                newsListFragment.newsEntryList.clear();
+                newsListFragment.currentPointer -= 17;
+                newsListFragment.putData();
                 newsListFragment.kocoSA.notifyDataSetChanged();
 
         } catch(Exception e){}
