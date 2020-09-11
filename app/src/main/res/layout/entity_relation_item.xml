@@ -14,7 +14,7 @@
         >
 
         <TextView
-            android:id="@+id/relation_item_key"
+            android:id="@+id/relation_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="导致"
@@ -26,6 +26,7 @@
             />
 
         <TextView
+            android:id="@+id/relation_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="新型冠状病毒肺炎"

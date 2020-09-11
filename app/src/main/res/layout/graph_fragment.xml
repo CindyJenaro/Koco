@@ -21,7 +21,7 @@
             android:layout_margin="@dimen/searchbar_padding"/>
 
         <TextView
-            android:id="@+id/entity_title"
+            android:id="@+id/entity_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/item_padding"
@@ -34,60 +34,12 @@
             android:text="输入查询的实体"
             />
 
-
-        <ScrollView
+        <ListView
+            android:id="@+id/entity_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/search"
-            android:layout_weight="12"
-            >
+            />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    />
-
-
-
-<!--                <TextView-->
-<!--                    android:id="@+id/entity_property"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textSize="16dp"-->
-<!--                    android:textColor="@color/moderate_black"-->
-<!--                    android:text="实体属性"-->
-<!--                    android:paddingTop="20dp"-->
-<!--                    android:paddingLeft="@dimen/detail_padding"-->
-<!--                    android:paddingRight="@dimen/detail_padding"-->
-<!--                    android:paddingBottom="@dimen/detail_padding"-->
-<!--                    android:layout_below="@+id/entity_description"-->
-<!--                    />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/entity_relations"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textSize="16dp"-->
-<!--                    android:textColor="@color/moderate_black"-->
-<!--                    android:text="实体关系"-->
-<!--                    android:paddingTop="20dp"-->
-<!--                    android:paddingLeft="@dimen/detail_padding"-->
-<!--                    android:paddingRight="@dimen/detail_padding"-->
-<!--                    android:paddingBottom="@dimen/detail_padding"-->
-<!--                    android:layout_below="@+id/entity_property"-->
-
-<!--                    />-->
-
-
-            </RelativeLayout>
-
-        </ScrollView>
 
     </LinearLayout>
 

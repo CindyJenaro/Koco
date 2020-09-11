@@ -135,8 +135,6 @@ public class NewsListFragment extends Fragment {
         kocoSV.setQueryHint("查询新闻关键词");
         kocoSV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
-            private String TAG = getClass().getSimpleName();
-
             @Override
             public boolean onQueryTextSubmit(String query) {
 
@@ -300,6 +298,9 @@ public class NewsListFragment extends Fragment {
 
                 View currentItem = getViewByPosition(position, kocoLV);
                 TextView news_title_view = currentItem.findViewById(R.id.news_title);
+                if(news_title_view.getText().equals(getContext().getString(R.string.end_of_list))){
+                    return;
+                }
                 news_title_view.setTextColor(getContext().getColor(R.color.gray));
                 TextView news_id_view = currentItem.findViewById(R.id.news_id);
                 String news_id = news_id_view.getText().toString();
@@ -310,18 +311,8 @@ public class NewsListFragment extends Fragment {
 
                 try{
 
-//                    currentData.setViewed(true); // record viewed history
-//                    if(currentData.isViewed()){
-//                        Log.d("debug", "currentData is viewed:");
-//                        Log.d("debug", currentData.getNewsid());
-//                    }
-
-                    Log.d("debug", "" + currentData.isViewed());
                     currentData.setViewed(true);
                     Newsdatabase.getInstance(getContext()).getNewsDao().insertdata(currentData);
-                    Log.d("debug", "" + currentData.isViewed());
-                    Log.d("debug", "" + Newsdatabase.getInstance(getContext()).
-                            getNewsDao().getbyNewsId(currentData.getNewsid()).isViewed());
 
                     Intent intent = new Intent();
                     intent.setClass(getContext(), GetNewsDetailActivity.class);
