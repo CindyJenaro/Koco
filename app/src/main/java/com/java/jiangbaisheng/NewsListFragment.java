@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,12 @@ public class NewsListFragment extends Fragment {
     SearchView kocoSV;
     ListView kocoLV;
     RefreshableView kocoRV;
-    SimpleAdapter kocoSA;
+    NewsItemAdapter kocoSA;
+    List<Map<String, Object>> newsEntryList;
+    int currentPointer = 1;
+    boolean first_called_putdata = true;
+
+    int typeFlag = NewsItemAdapter.BOTH;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState){
@@ -38,6 +44,8 @@ public class NewsListFragment extends Fragment {
 
         kocoSV = view.findViewById(R.id.search);
         kocoLV = view.findViewById(R.id.news_list);
+
+        newsEntryList = new LinkedList<Map<String, Object>>();
 
         initSearchView();
         initTypeList();
@@ -50,10 +58,17 @@ public class NewsListFragment extends Fragment {
             public void onRefresh() {
                 try{
                     Log.d("debug", "I am refreshing!");
-                    Thread.sleep(3000);
                     MainActivity mainActivity = (MainActivity) getActivity();
-                    mainActivity.getnews();
-                    kocoSA.notifyDataSetChanged();
+//                    mainActivity.getnews();
+                    putData();
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            kocoSA.notifyDataSetChanged(); //Ui线程中更新listview
+                        }
+                    });
+//                    kocoSA.notifyDataSetChanged();
 
                 } catch(Exception e){
                     e.printStackTrace();
@@ -115,7 +130,10 @@ public class NewsListFragment extends Fragment {
 
                 typeNews.setVisibility(View.GONE);
                 typeAddNews.setVisibility(View.VISIBLE);
-                // todo
+
+                typeFlag = typeFlag & NewsItemAdapter.PAPER_ONLY;
+                kocoSA.setFlag(typeFlag);
+                kocoSA.notifyDataSetChanged();
 
             }
         });
@@ -126,7 +144,10 @@ public class NewsListFragment extends Fragment {
 
                 typePaper.setVisibility(View.GONE);
                 typeAddPaper.setVisibility(View.VISIBLE);
-                // todo
+
+                typeFlag = typeFlag & NewsItemAdapter.NEWS_ONLY;
+                kocoSA.setFlag(typeFlag);
+                kocoSA.notifyDataSetChanged();
 
             }
         });
@@ -136,7 +157,6 @@ public class NewsListFragment extends Fragment {
             public void onClick(View view) {
 
                 typeAddList.setVisibility(View.VISIBLE);
-                // todo
 
             }
         });
@@ -149,6 +169,10 @@ public class NewsListFragment extends Fragment {
                 typeAddList.setVisibility(View.GONE);
                 typeAddNews.setVisibility(View.GONE);
 
+                typeFlag = typeFlag | NewsItemAdapter.NEWS_ONLY;
+                kocoSA.setFlag(typeFlag);
+                kocoSA.notifyDataSetChanged();
+
             }
         });
 
@@ -160,6 +184,10 @@ public class NewsListFragment extends Fragment {
                 typeAddList.setVisibility(View.GONE);
                 typeAddPaper.setVisibility(View.GONE);
 
+                typeFlag = typeFlag | NewsItemAdapter.PAPER_ONLY;
+                kocoSA.setFlag(typeFlag);
+                kocoSA.notifyDataSetChanged();
+
             }
         });
 
@@ -168,9 +196,10 @@ public class NewsListFragment extends Fragment {
     private void initListView(){
 
         kocoSA = new NewsItemAdapter(getActivity(), putData(),
-                R.layout.news_list_item, new String[]{"title", "date", "type", "id"},
+                R.layout.news_list_item, new String[]{"title", "date", "type", "id", "viewed"},
                 new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_id});
         kocoLV.setAdapter(kocoSA);
+
         kocoLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -196,13 +225,13 @@ public class NewsListFragment extends Fragment {
                     }
 
 
-
                     Intent intent = new Intent();
                     intent.setClass(getContext(), GetNewsDetailActivity.class);
 
                     JSONObject jobj = new JSONObject(currentData.getJson());
                     intent.putExtra("title", jobj.getString("title"));
                     intent.putExtra("date", "日期：" + jobj.getString("time"));
+                    intent.putExtra("viewed", currentData.isViewed());
 
                     if(!jobj.getString("content").equals("")){
                         intent.putExtra("content", jobj.getString("content"));
@@ -235,6 +264,8 @@ public class NewsListFragment extends Fragment {
                 } catch (JSONException e) {
                     Log.d("debug", "JSONException occured!");
                     e.printStackTrace();
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
 
             }
@@ -244,13 +275,11 @@ public class NewsListFragment extends Fragment {
 
     public List<Map<String, Object>> putData(){
 
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
 //        Map<String, Object> map1 = new HashMap<String, Object>();
 //        map1.put("title", "钟南山发明新药起死回生    九成重症病人或因此获益");
 //        map1.put("date", "2020-9-7");
 //        map1.put("type", "news");
-//        list.add(map1);
+//        newsEntryList.add(0, map1);
 
 
         List<Newsdata> allUsers = Newsdatabase
@@ -260,7 +289,7 @@ public class NewsListFragment extends Fragment {
 
         try{
 
-            for(int idx = 1; idx < 17; idx++){
+            for(int idx = 0 + currentPointer; idx < 17 + currentPointer; idx++){
 
                 Map<String, Object> map = new HashMap<>();
                 Newsdata currentData = allUsers.get(idx);
@@ -283,21 +312,30 @@ public class NewsListFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-
-                list.add(map);
+                newsEntryList.add(0, map);
             }
+
+            currentPointer += 17;
 
         } catch (ArrayIndexOutOfBoundsException e){
 
             Log.d("debug", "No items in dataset yet.");
 
+        } catch (Exception e){
+
+            e.printStackTrace();
+
         }
 
+        if(first_called_putdata){
 
-        Map<String, Object> noMoreItems = new HashMap<>();
-        noMoreItems.put("title", getString(R.string.end_of_list));
-        list.add(noMoreItems);
-        return list;
+            Map<String, Object> noMoreItems = new HashMap<>();
+            noMoreItems.put("title", getString(R.string.end_of_list));
+            newsEntryList.add(noMoreItems);
+            first_called_putdata = false;
+        }
+
+        return newsEntryList;
     }
 
     public View getViewByPosition(int pos, ListView listView) {

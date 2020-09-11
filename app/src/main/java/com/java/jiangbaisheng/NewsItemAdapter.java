@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -20,6 +21,11 @@ public class NewsItemAdapter extends SimpleAdapter {
 
     private Context context;
     private List<Map<String, Object>> list;
+    private int typeFlag = BOTH;
+    public static final int NONE = 0;
+    public static final int NEWS_ONLY = 1;
+    public static final int PAPER_ONLY = 2;
+    public static final int BOTH = 3;
 
     NewsItemAdapter(Context context, List<Map<String, Object>> data,
                     @LayoutRes int resource, String[] from, @IdRes int[] to){
@@ -27,6 +33,11 @@ public class NewsItemAdapter extends SimpleAdapter {
         super(context, data, resource, from, to);
         this.context = context;
         this.list = data;
+        this.typeFlag = typeFlag;
+    }
+
+    public void setFlag(int typeFlag){
+        this.typeFlag = typeFlag;
     }
 
 
@@ -87,6 +98,15 @@ public class NewsItemAdapter extends SimpleAdapter {
 
         }
 
+        if(typeFlag == NONE){
+            view.setVisibility(View.GONE);
+        } else if(typeFlag == NEWS_ONLY && type.getText().equals("paper")){
+            view.setVisibility(View.GONE);
+        } else if(typeFlag == PAPER_ONLY && type.getText().equals("news")){
+            view.setVisibility(View.GONE);
+        } else{
+            view.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
