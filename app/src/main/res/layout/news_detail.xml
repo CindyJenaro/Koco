@@ -61,7 +61,7 @@
                 android:id="@+id/detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="我是皮卡丘我是皮卡丘我是皮卡丘"
+                android:text="没人逼你看"
                 android:textSize="@dimen/title_textsize"
                 android:paddingTop="@dimen/detail_padding"
                 android:paddingRight="@dimen/detail_padding"
@@ -76,7 +76,7 @@
                 android:layout_below="@id/detail_title"
                 android:paddingLeft="@dimen/detail_padding"
                 android:paddingTop="10dp"
-                android:text="日期：3028-11-11"
+                android:text="日期：0000-00-00"
                 />
 
             <TextView
@@ -87,7 +87,7 @@
                 android:layout_toRightOf="@id/detail_time"
                 android:paddingTop="10dp"
                 android:gravity="right"
-                android:text="作者：Pika Jenaro"
+                android:text="作者：二百五"
                 android:paddingRight="@dimen/detail_padding"
                 />
 
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/content_textsize"
                 android:textColor="@color/moderate_black"
-                android:text="我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘\n\n我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘我是皮卡丘"
+                android:text="略略略略略略略略略略略略略略略"
                 android:layout_below="@id/detail_author"
                 android:paddingLeft="@dimen/detail_padding"
                 android:paddingRight="@dimen/detail_padding"
@@ -112,7 +112,7 @@
                 android:layout_below="@id/detail_text"
                 android:gravity="right"
                 android:paddingRight="@dimen/detail_padding"
-                android:text="来源：WWW.XINHUA.NET"
+                android:text="来源：WWW.FOOL.NET"
                 android:paddingBottom="20dp"
                 />
 
@@ -138,5 +138,14 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/icon1"/>
+
+    <ImageButton
+        android:id="@+id/sharing_tip"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/fake_sharing"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        />
 
 </LinearLayout>

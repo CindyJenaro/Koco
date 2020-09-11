@@ -37,7 +37,7 @@ public class NewsListFragment extends Fragment {
 
         kocoSV = view.findViewById(R.id.search);
         initSearchView();
-
+        initTypeList();
 
         kocoLV = view.findViewById(R.id.news_list);
         SimpleAdapter kocoSA = new NewsItemAdapter(getActivity(), putData(),
@@ -158,6 +158,67 @@ public class NewsListFragment extends Fragment {
                 return false;
             }
 
+        });
+
+    }
+
+    private void initTypeList(){
+
+        final Button typeNews = view.findViewById(R.id.type_news);
+        final Button typePaper = view.findViewById(R.id.type_paper);
+        Button typeAdd = view.findViewById(R.id.type_add);
+        final LinearLayout typeAddList = view.findViewById(R.id.type_add_list);
+        Button typeAddNews = view.findViewById(R.id.type_add_news);
+        Button typeAddPaper = view.findViewById(R.id.type_add_paper);
+
+        typeNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                typeNews.setVisibility(View.GONE);
+                // todo
+
+            }
+        });
+
+        typePaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                typePaper.setVisibility(View.GONE);
+                // todo
+
+            }
+        });
+
+        typeAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                typeAddList.setVisibility(View.VISIBLE);
+                // todo
+
+            }
+        });
+
+        typeAddNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                typeNews.setVisibility(View.VISIBLE);
+                typeAddList.setVisibility(View.GONE);
+
+            }
+        });
+
+        typeAddPaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                typePaper.setVisibility(View.VISIBLE);
+                typeAddList.setVisibility(View.GONE);
+
+            }
         });
 
     }

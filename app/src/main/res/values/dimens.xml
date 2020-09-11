@@ -11,7 +11,7 @@
     <dimen name="tab_margintop">38dp</dimen>
     <dimen name="top_button_textsize">20dp</dimen>
     <dimen name="searchbar_padding">0dp</dimen>
-    <dikjkilmen name="item_marginleft">20dp</dikjkilmen>
+    <dimen name="item_marginleft">20dp</dimen>
     <dimen name="item_padding">16dp</dimen>
     <dimen name="date_padding_left">16dp</dimen>
     <dimen name="source_padding_right">60dp</dimen>

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ public class GetNewsDetailActivity extends AppCompatActivity {
 
     Button returnBtn;
     FloatingActionButton shareBtn;
+    ImageButton sharing_tip;
     private IWXAPI api;
     private static final int THUMB_SIZE = 150;
     private static final String APP_ID = "wx0e6dee95bbf7795c";
@@ -55,6 +57,7 @@ public class GetNewsDetailActivity extends AppCompatActivity {
         });
 
         shareBtn = findViewById(R.id.share_button);
+        sharing_tip = findViewById(R.id.sharing_tip);
         initSharingMethod();
 
         Bundle bud = getIntent().getExtras();
@@ -97,8 +100,17 @@ public class GetNewsDetailActivity extends AppCompatActivity {
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "分享至微信", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                sharing_tip.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        sharing_tip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                sharing_tip.setVisibility(View.GONE);
 
                 new Thread(new Runnable() {
                     @Override
@@ -125,7 +137,6 @@ public class GetNewsDetailActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
-
             }
         });
 

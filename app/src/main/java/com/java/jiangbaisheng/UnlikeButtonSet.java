@@ -41,6 +41,7 @@ public class UnlikeButtonSet extends RelativeLayout {
             public void onClick(View view) {
                 // remove item from database and refresh
                 // test evoking activity
+                unlike.setVisibility(View.GONE);
                 Intent intent = new Intent();
                 intent.setClass(getContext(), GetNewsDetailActivity.class);
                 getContext().startActivity(intent);
