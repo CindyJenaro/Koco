@@ -55,11 +55,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        try{
-//            delAll();
-//        } catch (Exception e) {}
+        try{
+            delAll();
+            getnews(); //获取新闻
+        } catch (Exception e) {}
 
-//        getnews();//获取新闻
+
 
         kocoVP = findViewById(R.id.view_pager);
         kocoTL = findViewById(R.id.tabs);

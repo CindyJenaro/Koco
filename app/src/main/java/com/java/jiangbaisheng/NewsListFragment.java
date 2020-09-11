@@ -58,7 +58,7 @@ public class NewsListFragment extends Fragment {
             public void onRefresh() {
                 try{
                     Log.d("debug", "I am refreshing!");
-                    MainActivity mainActivity = (MainActivity) getActivity();
+//                    MainActivity mainActivity = (MainActivity) getActivity();
 //                    mainActivity.getnews();
                     putData();
 
@@ -68,7 +68,6 @@ public class NewsListFragment extends Fragment {
                             kocoSA.notifyDataSetChanged(); //Ui线程中更新listview
                         }
                     });
-//                    kocoSA.notifyDataSetChanged();
 
                 } catch(Exception e){
                     e.printStackTrace();
@@ -197,7 +196,8 @@ public class NewsListFragment extends Fragment {
 
         kocoSA = new NewsItemAdapter(getActivity(), putData(),
                 R.layout.news_list_item, new String[]{"title", "date", "type", "id", "viewed"},
-                new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_id});
+                new int[]{R.id.news_title, R.id.news_date, R.id.news_type, R.id.news_id, R.id.news_viewed});
+
         kocoLV.setAdapter(kocoSA);
 
         kocoLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -287,6 +287,7 @@ public class NewsListFragment extends Fragment {
                 .getInstance(getActivity())
                 .getNewsDao()
                 .getall();
+        Log.d("debug", "the length of the list is " + allUsers.size());
 
         try{
 
@@ -327,11 +328,7 @@ public class NewsListFragment extends Fragment {
             e.printStackTrace();
 
         }
-        catch (Exception e){
 
-            Log.d("debug", e.toString());
-
-        }
 
 
         if(first_called_putdata){

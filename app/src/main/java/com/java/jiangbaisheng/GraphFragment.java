@@ -110,7 +110,6 @@ public class GraphFragment extends Fragment {
                             content.setText(searchkey);
 
 
-
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject json = array.getJSONObject(i);
                                 String urls = json.getString("url");        //实体网页
@@ -176,8 +175,6 @@ public class GraphFragment extends Fragment {
                                     content.setText( whole_entity.toString());
 
                                 }
-
-
 
                             }
 

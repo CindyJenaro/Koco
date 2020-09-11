@@ -2,6 +2,7 @@ package com.java.jiangbaisheng;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,7 @@ public class NewsItemAdapter extends SimpleAdapter {
         TextView date = view.findViewById(R.id.news_date);
         TextView type = view.findViewById(R.id.news_type);
         TextView id = view.findViewById(R.id.news_id);
+        TextView viewed = view.findViewById(R.id.news_viewed);
 
 
         if(!list.get(position).get("title").equals(context.getString(R.string.end_of_list))){
@@ -67,17 +69,32 @@ public class NewsItemAdapter extends SimpleAdapter {
                 date.setText((String)list.get(position).get("date"));
                 type.setText((String)list.get(position).get("type"));
                 id.setText(list.get(position).get("id").toString());
+                viewed.setText(list.get(position).get("viewed").toString());
 
                 // need to bring them back manually
                 title.setGravity(Gravity.LEFT);
                 view.setBackground(context.getDrawable(R.drawable.item_border));
 
-                if((Boolean)list.get(position).get("viewed")){
+
+                if(viewed.getText().equals(new Boolean(true).toString())){
+
+//                    if(id.getText().equals("5f4e44ba9fced0a24b5bbc2f")){
+                    if(true){
+                        Log.d("debug", "in Adapter considered viewed:");
+                        Log.d("debug", id.getText().toString());
+                        Log.d("debug", "");
+                    }
 
                     title.setTextColor(context.getColor(R.color.gray));
 
                 } else{
 
+//                    if(id.getText().equals("5f4e44ba9fced0a24b5bbc2f")){
+                    if(true){
+                        Log.d("debug", "in Adapter considered not viewed:");
+                        Log.d("debug", id.getText().toString());
+                        Log.d("debug", "");
+                    }
                     title.setTextColor(context.getColor(R.color.almost_black));
 
                 }
