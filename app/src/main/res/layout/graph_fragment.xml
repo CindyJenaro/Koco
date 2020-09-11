@@ -31,6 +31,7 @@
             android:layout_marginLeft="@dimen/item_marginleft"
             android:gravity="center_horizontal"
             android:textColor="@color/almost_black"
+            android:text="输入查询的实体"
             />
 
         <TextView
