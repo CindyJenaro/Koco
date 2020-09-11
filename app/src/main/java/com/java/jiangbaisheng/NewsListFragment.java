@@ -132,7 +132,7 @@ public class NewsListFragment extends Fragment {
         });
 
         kocoSV.setSubmitButtonEnabled(true);
-        kocoSV.setQueryHint("mdzz");
+        kocoSV.setQueryHint("查询新闻关键词");
         kocoSV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             private String TAG = getClass().getSimpleName();
