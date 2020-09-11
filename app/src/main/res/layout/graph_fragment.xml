@@ -28,7 +28,6 @@
             android:paddingRight="@dimen/item_padding"
             android:paddingTop="26dp"
             android:paddingBottom="10dp"
-            android:text="实体名称"
             android:layout_marginLeft="@dimen/item_marginleft"
             android:gravity="center_horizontal"
             android:textColor="@color/almost_black"
@@ -70,7 +69,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
                     android:textColor="@color/moderate_black"
-                    android:text="实体描述"
                     android:paddingTop="20dp"
                     android:paddingLeft="@dimen/detail_padding"
                     android:paddingRight="@dimen/detail_padding"
@@ -79,34 +77,34 @@
 
                     />
 
-                <TextView
-                    android:id="@+id/entity_property"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:textColor="@color/moderate_black"
-                    android:text="实体属性"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="@dimen/detail_padding"
-                    android:paddingRight="@dimen/detail_padding"
-                    android:paddingBottom="@dimen/detail_padding"
-                    android:layout_below="@+id/entity_description"
-                    />
+<!--                <TextView-->
+<!--                    android:id="@+id/entity_property"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textSize="16dp"-->
+<!--                    android:textColor="@color/moderate_black"-->
+<!--                    android:text="实体属性"-->
+<!--                    android:paddingTop="20dp"-->
+<!--                    android:paddingLeft="@dimen/detail_padding"-->
+<!--                    android:paddingRight="@dimen/detail_padding"-->
+<!--                    android:paddingBottom="@dimen/detail_padding"-->
+<!--                    android:layout_below="@+id/entity_description"-->
+<!--                    />-->
 
-                <TextView
-                    android:id="@+id/entity_relations"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:textColor="@color/moderate_black"
-                    android:text="实体关系"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="@dimen/detail_padding"
-                    android:paddingRight="@dimen/detail_padding"
-                    android:paddingBottom="@dimen/detail_padding"
-                    android:layout_below="@+id/entity_property"
+<!--                <TextView-->
+<!--                    android:id="@+id/entity_relations"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textSize="16dp"-->
+<!--                    android:textColor="@color/moderate_black"-->
+<!--                    android:text="实体关系"-->
+<!--                    android:paddingTop="20dp"-->
+<!--                    android:paddingLeft="@dimen/detail_padding"-->
+<!--                    android:paddingRight="@dimen/detail_padding"-->
+<!--                    android:paddingBottom="@dimen/detail_padding"-->
+<!--                    android:layout_below="@+id/entity_property"-->
 
-                    />
+<!--                    />-->
 
 
             </RelativeLayout>

@@ -29,6 +29,7 @@ public class GraphFragment extends Fragment {
     TextView content;
     View view;
     StringBuilder whole_entity = null;
+    ArrayList<String> ent = new ArrayList<String>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -36,7 +37,7 @@ public class GraphFragment extends Fragment {
         searchView = view.findViewById(R.id.search);
         initSearchView();
 
-//        Log.v("YX", "0");
+        Log.v("YX", "0");
 //        String keyword = "病毒";
 //        getgraphdata(keyword);
         return view;
@@ -66,6 +67,8 @@ public class GraphFragment extends Fragment {
                     searchView.clearFocus();
                 }
 
+                Log.v("YX", "1");
+                ent.clear();
                 getgraphdata(searchkey);
 
 
@@ -104,6 +107,8 @@ public class GraphFragment extends Fragment {
                         if(array.length()==0){//查询无结果
                             content = view.findViewById(R.id.entity_title);
                             content.setText("无相关实体！");
+                            content = view.findViewById(R.id.entity_description);
+                            content.setText("无");
                         }
                         else{
                             content = view.findViewById(R.id.entity_title);
@@ -119,7 +124,8 @@ public class GraphFragment extends Fragment {
                                 String img = json.getString("img");
                                 Log.v("YX",img);
 
-                                whole_entity = new StringBuilder(label + "\n" + urls + "\n");
+//                                whole_entity.append(label).append("\n" ).append( urls ).append("\n");
+
                                 String abstractinfo = json.getString("abstractInfo");
 //                            Log.v("YX", abstractinfo);
                                 JSONObject json2 = new JSONObject(abstractinfo);
@@ -131,7 +137,8 @@ public class GraphFragment extends Fragment {
                                 String zhwiki = json2.getString("zhwiki");
                                 Log.v("YX", zhwiki);
 
-                                whole_entity.append(enwiki).append(" ").append(baidu).append(" ").append(zhwiki).append("\n");
+//                                whole_entity.append(enwiki).append(" ").append(baidu).append(" ").append(zhwiki).append("\n");
+                                ent.add(label+"\n"+urls+"\n"+enwiki+" "+baidu+" "+zhwiki+" "+"\n");
                                 String covid = json2.getString("COVID");
 //                            Log.v("YX", covid);
                                 JSONObject json3 = new JSONObject(covid);
@@ -144,11 +151,12 @@ public class GraphFragment extends Fragment {
                                     Log.v("YX", sKey);
                                     String value = json5.optString(sKey);
                                     Log.v("YX", value);
-                                    whole_entity.append(sKey).append(" ").append(value).append("\n");
+//                                    whole_entity.append(sKey).append(" ").append(value).append("\n");
+                                    ent.add(sKey+" "+value+"\n");
 //                                    list.add();
                                 }
 
-                                whole_entity.append("relations:\n");
+
                                 JSONArray array2 = json3.getJSONArray("relations");     //实体关系
 //                            Log.v("YX", array2.toString());
                                 for (int k = 0; k < array2.length(); k++) {
@@ -163,20 +171,34 @@ public class GraphFragment extends Fragment {
                                     Log.v("YX",forward);
 
                                     if(forward.equals("true")){
-                                        whole_entity.append(label2).append(relation).append(label).append("\n");
+//                                        whole_entity.append(label2).append(relation).append(label).append("\n");
+                                        ent.add(label2+relation+label+"\n");
                                     }
                                     else{
-                                        whole_entity.append(label).append(relation).append(label2).append("\n");
+//                                        whole_entity.append(label).append(relation).append(label2).append("\n");
+                                        ent.add(label+relation+label2+"\n");
                                     }
 
 
-                                    Log.v("YX", whole_entity.toString());
-                                    content = view.findViewById(R.id.entity_description);
-                                    content.setText( whole_entity.toString());
+
 
                                 }
 
                             }
+                            boolean first = true;
+
+                            StringBuilder result = new StringBuilder();
+                            Log.v("YX","为啥不输出");
+                            for(String string :ent) {
+                                if(first) {
+                                    first=false;
+                                }else{
+                                    result.append(",");
+                                }
+                                result.append(string);
+                            }
+                            content = view.findViewById(R.id.entity_description);
+                            content.setText(result.toString());
 
                         }
                     }
