@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject json = array.getJSONObject(i);    //取出数组中的对象
                             String j = json.toString();
                             String id= json.getString("_id");
-                            String content= json.getString("content");
+                            String content = json.getString("content");
                             String time = json.getString("time");
                             String title= json.getString("title");
                             String type= json.getString("type");
