@@ -3,6 +3,7 @@ package com.java.jiangbaisheng;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -32,39 +33,18 @@ public class AcademicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.academic_fragment, container, false);
 
-
         webview = view.findViewById(R.id.wv_webview);
-//        view.findViewById(R.id.search);
-        String url = "https://2019-ncov.aminer.cn/";
         //此方法可以在webview中打开链接而不会跳转到外部浏览器
         webview.setWebViewClient(new WebViewClient());
         //此方法可以启用html5页面的javascript
         webview.getSettings().setJavaScriptEnabled(true);
-        webview.loadUrl(url);
-
-
-//        //实例化WebView对象
-//        webview = new WebView(getContext());
-//        //设置WebView属性，能够执行Javascript脚本
-//        webview.getSettings().setJavaScriptEnabled(true);
-//
-//        try {
-//            //设置打开的页面地址
-//            webview.loadUrl("http://www.baidu.com");
-//        }
-//        catch(Exception ex)
-//        {
-//            ex.printStackTrace();
-//        }
-//        view=webview;
-
-//        getdata();
+        webview.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+        webview.loadUrl("file:///android_asset/AMiner-传染病学呼吸科专家画像-专家学者.htm");
         return view;
 
     }
 
-
-    public void getdata() {
+    public void getzhiyidata() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -85,12 +65,6 @@ public class AcademicFragment extends Fragment {
                         //创建Json实例
                         JSONObject testjson = new JSONObject(line);//builder读取了JSON中的数据。
                         //直接传入JSONObject来构造一个实例
-
-
-
-
-
-
 
 
                     }
