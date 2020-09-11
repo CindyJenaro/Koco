@@ -51,6 +51,8 @@ public class NewsListFragment extends Fragment {
                 Log.d("debug", "item " + position + " clicked");
 
                 View currentItem = getViewByPosition(position, kocoLV);
+                TextView news_title_view = currentItem.findViewById(R.id.news_title);
+                news_title_view.setTextColor(getContext().getColor(R.color.gray));
                 TextView news_id_view = currentItem.findViewById(R.id.news_id);
                 String news_id = news_id_view.getText().toString();
                 Newsdata currentData = Newsdatabase.
