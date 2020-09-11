@@ -258,32 +258,41 @@ public class NewsListFragment extends Fragment {
                 .getNewsDao()
                 .getall();
 
-        for(int idx = 1; idx < 17; idx++){
+        try{
 
-            Map<String, Object> map = new HashMap<>();
-            Newsdata currentData = allUsers.get(idx);
-            String id = currentData.getNewsid();
-            map.put("id", id);
-            String title = currentData.getTitle();
-            map.put("title", title);
-            String date = "" + currentData.getTime();
-            map.put("date", date);
-            Boolean viewed = currentData.isViewed();
-            map.put("viewed", viewed);
+            for(int idx = 1; idx < 17; idx++){
 
-            String json = currentData.getJson();
-            try{
-                JSONObject jobj = new JSONObject(json);
-                String type = jobj.getString("type");
-                map.put("type", type);
-            } catch(JSONException e) {
-                Log.d("debug", "JSONException occured!");
-                e.printStackTrace();
+                Map<String, Object> map = new HashMap<>();
+                Newsdata currentData = allUsers.get(idx);
+                String id = currentData.getNewsid();
+                map.put("id", id);
+                String title = currentData.getTitle();
+                map.put("title", title);
+                String date = "" + currentData.getTime();
+                map.put("date", date);
+                Boolean viewed = currentData.isViewed();
+                map.put("viewed", viewed);
+
+                String json = currentData.getJson();
+                try{
+                    JSONObject jobj = new JSONObject(json);
+                    String type = jobj.getString("type");
+                    map.put("type", type);
+                } catch(JSONException e) {
+                    Log.d("debug", "JSONException occured!");
+                    e.printStackTrace();
+                }
+
+
+                list.add(map);
             }
 
+        } catch (ArrayIndexOutOfBoundsException e){
 
-            list.add(map);
+            Log.d("debug", "No items in dataset yet.");
+
         }
+
 
         Map<String, Object> noMoreItems = new HashMap<>();
         noMoreItems.put("title", getString(R.string.end_of_list));
