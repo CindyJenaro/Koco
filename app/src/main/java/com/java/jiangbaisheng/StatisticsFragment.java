@@ -1,16 +1,25 @@
 package com.java.jiangbaisheng;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.*;
 
 import com.bin.david.form.annotation.SmartColumn;
 //import com.bin.david.form.annotation.SmartTable;
 import com.bin.david.form.core.SmartTable;
+import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
+import com.bin.david.form.data.format.bg.ICellBackgroundFormat;
 import com.bin.david.form.data.format.draw.MultiLineDrawFormat;
+import com.bin.david.form.data.format.draw.TextDrawFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
 
@@ -115,6 +124,8 @@ public class StatisticsFragment extends Fragment {
                             stat.put(key,lastdata);
 
                         }
+
+                        //进行排序
                         Set set=stat.keySet();
                         Object[] arr=set.toArray();
                         Arrays.sort(arr);
@@ -122,41 +133,52 @@ public class StatisticsFragment extends Fragment {
                             String[] splitlocation = key.toString().split("\\|");//国家分开
                             String[] splitnum = stat.get(key).split(",");//数字分开
                             if(splitlocation.length == 1){//只有国家
+                                if( splitlocation[0].length()>12){
+                                    splitlocation[0]=insertstr(splitlocation[0],"\n",12);
+                                }
                                 list.add(new Statitics( splitlocation[0],"","",splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
                             }
                             else if(splitlocation.length == 2) {
+                                if( splitlocation[0].length()>12){
+                                    splitlocation[0]=insertstr(splitlocation[0],"\n",12);
+                                }
+                                if( splitlocation[1].length()>12){
+                                    splitlocation[1]=insertstr(splitlocation[1],"\n",12);
+                                    if( splitlocation[1].length()>24){
+                                        splitlocation[1]=insertstr(splitlocation[1],"\n",24);
+                                    }
+                                }
                                 list.add(new Statitics(splitlocation[0], splitlocation[1], "", splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
                             }
                             else if(splitlocation.length == 3){
+                                if( splitlocation[0].length()>12){
+                                    splitlocation[0]=insertstr(splitlocation[0],"\n",12);
+                                }
+                                if( splitlocation[1].length()>12){
+                                    splitlocation[1]=insertstr(splitlocation[1],"\n",12);
+                                    if( splitlocation[1].length()>24){
+                                        splitlocation[1]=insertstr(splitlocation[1],"\n",24);
+                                    }
+                                }
+                                if( splitlocation[2].length()>12){
+                                    splitlocation[2]=insertstr(splitlocation[2],"\n",12);
+                                    if( splitlocation[2].length()>24){
+                                        splitlocation[2]=insertstr(splitlocation[2],"\n",24);
+                                    }
+                                    if( splitlocation[2].length()>36){
+                                        splitlocation[2]=insertstr(splitlocation[2],"\n",36);
+                                    }
+                                }
                                 list.add(new Statitics( splitlocation[0],splitlocation[1],splitlocation[2],splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
 
                             }
                         }
 
-//                        //遍历hashmap
-//                        for(Map.Entry<String, String> entry : stat.entrySet()){
-//
-//                            String[] splitnum = entry.getValue().split(",");
-//                            String[] splitlocation = entry.getKey().split("\\|");
-//
-//                            if(splitlocation.length == 1){//只有国家
-//                                list.add(new Statitics( splitlocation[0],"","",splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
-//                            }
-//                            else if(splitlocation.length == 2) {
-//                                list.add(new Statitics(splitlocation[0], splitlocation[1], "", splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
-//                            }
-//                            else if(splitlocation.length == 3){
-//                                list.add(new Statitics( splitlocation[0],splitlocation[1],splitlocation[2],splitnum[0], splitnum[1], splitnum[2], splitnum[3], splitnum[4], splitnum[5]));
-//
-//                            }
-//
-////                            System.out.println("key= "+entry.getKey()+" and value= "+entry.getValue());
-//
-//                        }
+
+
 
                         //加入表格
-//                        Column<String> nameTask = new Column<>("任务名称", "taskName",new MultiLineDrawFormat<String>(Utils.dip2px(88)));
-//                        Column<String> co = new MultiLineDrawFormat<String>(.dip2px(88));
+
                         Column<String> country = new Column<>("country", "country");
                         Column<String> province = new Column<>("province", "province");
                         Column<String> county = new Column<>("county", "county");
@@ -175,9 +197,16 @@ public class StatisticsFragment extends Fragment {
                         table.getConfig().setShowYSequence(false);
                         table.setTableData(tableData);
                         table.getConfig().setContentStyle(new FontStyle());
-                        table.getConfig().setMinTableWidth(10);
+                        country.setFixed(true);
+//                        table.getConfig().setLeftAndTopBackgroundColor(155);
+//                        table.getConfig().setMinTableWidth(3000);
 //                        table.setSortColumn(country,false);
 
+
+//                        //设置列标题背景和颜色
+//                        table.getConfig().setColumnCellBackgroundFormat(background);
+//                        //设置统计行背景和颜色
+//                        table.getConfig().setCountBgCellFormat(background);
 
                     }
                 } catch (Exception e) {
@@ -187,5 +216,28 @@ public class StatisticsFragment extends Fragment {
             }
         }).start();
     }
+
+
+//    ICellBackgroundFormat<Column> background = new BaseCellBackgroundFormat<Column>() {
+//        @Override
+//        public int getBackGroundColor(Column column) {
+//            return ContextCompat.getColor(getContext(), R.color.almost_white);
+//        }
+//
+//        @Override
+//        public int getTextColor(Column column) {
+//            if("country".equals(column.getColumnName())){
+//                return ContextCompat.getColor(getContext(), R.color.colorAccent);
+//            }
+//            return TableConfig.INVALID_COLOR;
+//        }
+//    };
+
+    public String insertstr(String src, String dec, int position){
+        StringBuffer stringBuffer = new StringBuffer(src);
+        return stringBuffer.insert(position, dec).toString();
+    }
+
+
 
 }
