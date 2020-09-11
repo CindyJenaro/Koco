@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/entity_item"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_border"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/entity_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/item_padding"
+                android:paddingRight="@dimen/item_padding"
+                android:paddingTop="26dp"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="@dimen/item_marginleft"
+                android:gravity="center"
+                android:text="新型冠状病毒"
+                android:textSize="@dimen/title_textsize"
+                android:textColor="@color/almost_black"
+                />
+
+
+            <ImageView
+                android:id="@+id/entity_img"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_below="@id/entity_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/item_padding"
+                android:layout_marginLeft="@dimen/detail_padding"
+                android:layout_marginRight="@dimen/detail_padding"
+                android:layout_marginBottom="@dimen/item_padding"
+                android:background="@drawable/death"
+                />
+
+            <TextView
+                android:id="@+id/entity_abstract_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="概要"
+                android:textColor="@color/almost_black"
+                android:textSize="@dimen/secondary_title_textsize"
+                android:layout_below="@id/entity_img"
+                android:paddingTop="@dimen/item_padding"
+                android:paddingLeft="@dimen/item_padding"
+                />
+
+            <TextView
+                android:id="@+id/entity_abstract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="这种病毒非常可怕。"
+                android:textColor="@color/moderate_black"
+                android:paddingLeft="@dimen/detail_padding"
+                android:paddingRight="@dimen/detail_padding"
+                android:paddingTop="20dp"
+                android:layout_below="@id/entity_abstract_title"
+                />
+
+            <TextView
+                android:id="@+id/entity_properties_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="属性"
+                android:textColor="@color/almost_black"
+                android:textSize="@dimen/secondary_title_textsize"
+                android:layout_below="@id/entity_abstract"
+                android:paddingTop="@dimen/item_padding"
+                android:paddingLeft="@dimen/item_padding"
+                />
+
+            <ListView
+                android:id="@+id/entity_properties_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/entity_properties_title"
+                />
+
+            <TextView
+                android:id="@+id/entity_relations_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关联实体"
+                android:textColor="@color/almost_black"
+                android:textSize="@dimen/secondary_title_textsize"
+                android:layout_below="@id/entity_properties_list"
+                android:paddingTop="@dimen/item_padding"
+                android:paddingLeft="@dimen/item_padding"
+                />
+
+            <TextView
+                android:id="@+id/parent_entities_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="父实体："
+                android:layout_below="@id/entity_relations_title"
+                android:textSize="@dimen/tertiary_title_textsize"
+                android:textColor="@color/moderate_black"
+                android:paddingLeft="@dimen/detail_padding"
+                android:paddingTop="@dimen/item_padding"
+                />
+
+            <ListView
+                android:id="@+id/parent_entities_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/parent_entities_title"
+                />
+
+            <TextView
+                android:id="@+id/child_entities_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="子实体："
+                android:layout_below="@id/parent_entities_list"
+                android:textSize="@dimen/tertiary_title_textsize"
+                android:textColor="@color/moderate_black"
+                android:paddingLeft="@dimen/detail_padding"
+
+                />
+
+            <ListView
+                android:id="@+id/child_entities_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/child_entities_title"
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
