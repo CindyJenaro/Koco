@@ -16,6 +16,8 @@
     <dimen name="date_padding_left">16dp</dimen>
     <dimen name="source_padding_right">60dp</dimen>
     <dimen name="title_textsize">24dp</dimen>
+    <dimen name="secondary_title_textsize">18dp</dimen>
+    <dimen name="tertiary_title_textsize">16dp</dimen>
     <dimen name="content_textsize">16dp</dimen>
     <dimen name="detail_padding">44dp</dimen>
 </resources>

@@ -28,17 +28,10 @@
             android:paddingRight="@dimen/item_padding"
             android:paddingTop="26dp"
             android:paddingBottom="10dp"
-            android:layout_marginLeft="@dimen/item_marginleft"
+            android:textSize="@dimen/title_textsize"
             android:gravity="center_horizontal"
             android:textColor="@color/almost_black"
             android:text="输入查询的实体"
-            />
-
-        <TextView
-            android:id="@+id/entity_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
             />
 
 
@@ -55,28 +48,12 @@
                 >
 
                 <TextView
-                    android:id="@+id/entity_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/moderate_black"
-                    android:paddingLeft="@dimen/detail_padding"
-                    android:paddingRight="@dimen/detail_padding"
-                    android:paddingBottom="@dimen/detail_padding"
+                    android:text=""
                     />
 
-                <TextView
-                    android:id="@+id/entity_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:textColor="@color/moderate_black"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="@dimen/detail_padding"
-                    android:paddingRight="@dimen/detail_padding"
-                    android:paddingBottom="@dimen/detail_padding"
-                    android:layout_below="@+id/entity_img"
 
-                    />
 
 <!--                <TextView-->
 <!--                    android:id="@+id/entity_property"-->

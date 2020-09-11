@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/property_item"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/item_padding"
+        android:layout_marginRight="@dimen/item_padding"
+        >
+
+        <TextView
+            android:id="@+id/relation_item_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="导致"
+            android:textSize="@dimen/content_textsize"
+            android:textColor="@color/moderate_black"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/searchbar_style"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新型冠状病毒肺炎"
+            android:textSize="@dimen/content_textsize"
+            android:textColor="@color/moderate_black"
+            android:layout_weight="12"
+            android:paddingLeft="@dimen/item_padding"
+            android:paddingRight="@dimen/item_padding"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/property_item"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/property_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="潜伏期"
+        android:textColor="@color/almost_black"
+        android:textSize="@dimen/tertiary_title_textsize"
+        android:padding="@dimen/item_padding"
+        />
+
+    <TextView
+        android:id="@+id/property_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/property_key"
+        android:text="俄罗斯卫星通讯社9月11日消息，乌克兰前总理季莫申科的发言人玛丽娅·索罗卡表示，季莫申科战胜了新冠病毒，但仍在治疗肺炎。"
+        android:textColor="@color/moderate_black"
+        android:textSize="@dimen/content_textsize"
+        android:paddingLeft="@dimen/detail_padding"
+        android:paddingRight="@dimen/detail_padding"
+        android:paddingBottom="10dp"
+        />
+
+
+</RelativeLayout>
