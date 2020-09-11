@@ -3,12 +3,31 @@
     android:id="@+id/entity_item"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_border"
     >
+    <ImageView
+        android:id="@+id/entity_item_border"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/theme"
+        />
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:background="@color/theme"
+        />
+
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:background="@color/theme"
+        android:layout_alignRight="@+id/entity_item_border"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/entity_item_border"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -66,11 +85,13 @@
                 android:paddingLeft="@dimen/item_padding"
                 />
 
-            <ListView
+            <com.java.jiangbaisheng.KocoListView
                 android:id="@+id/entity_properties_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/entity_properties_title"
+                android:focusedByDefault="false"
+                android:divider="@null"
                 />
 
             <TextView
@@ -97,11 +118,13 @@
                 android:paddingTop="@dimen/item_padding"
                 />
 
-            <ListView
+            <com.java.jiangbaisheng.KocoListView
                 android:id="@+id/parent_entities_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/parent_entities_title"
+                android:focusedByDefault="false"
+                android:divider="@null"
                 />
 
             <TextView
@@ -110,17 +133,21 @@
                 android:layout_height="wrap_content"
                 android:text="子实体："
                 android:layout_below="@id/parent_entities_list"
+                android:paddingTop="@dimen/item_padding"
                 android:textSize="@dimen/tertiary_title_textsize"
                 android:textColor="@color/moderate_black"
                 android:paddingLeft="@dimen/detail_padding"
 
                 />
 
-            <ListView
+            <com.java.jiangbaisheng.KocoListView
                 android:id="@+id/child_entities_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/child_entities_title"
+                android:layout_marginBottom="@dimen/detail_padding"
+                android:focusedByDefault="false"
+                android:divider="@null"
                 />
 
         </RelativeLayout>

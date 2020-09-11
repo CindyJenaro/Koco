@@ -9,20 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/item_padding"
-        android:layout_marginRight="@dimen/item_padding"
+        android:layout_marginLeft="@dimen/detail_padding"
+        android:layout_marginRight="@dimen/detail_padding"
+        android:layout_marginTop="@dimen/item_padding"
+
         >
 
         <TextView
             android:id="@+id/relation_key"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="导致"
             android:textSize="@dimen/content_textsize"
             android:textColor="@color/moderate_black"
             android:gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/searchbar_style"
             />
 
         <TextView

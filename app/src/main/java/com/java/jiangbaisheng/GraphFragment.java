@@ -71,8 +71,14 @@ public class GraphFragment extends Fragment {
                     searchView.clearFocus();
                 }
 
+                graphEntityList.clear();
                 getgraphdata(searchkey);
-                kocoGA.notifyDataSetChanged();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        kocoGA.notifyDataSetChanged(); //Ui线程中更新listview
+                    }
+                });
 
                 return true;
             }
@@ -99,86 +105,86 @@ public class GraphFragment extends Fragment {
     public List<Map<String, Object>> getgraphdata(final String keyword) {
 
         if(keyword.equals("")){
-            return new LinkedList<Map<String, Object>>();
+
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("title", "eeeeee");
+//            graphEntityList.add(map);
+
+            return graphEntityList;
         }
 
         graphEntityList.clear();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity=" + keyword);
-                    HttpURLConnection connect=(HttpURLConnection)url.openConnection();
-                    InputStream input=connect.getInputStream();
-                    BufferedReader in = new BufferedReader(new InputStreamReader(input));
-                    String line = null;
-                    System.out.println(connect.getResponseCode());
-                    StringBuffer sb = new StringBuffer();
-                    while ((line = in.readLine()) != null) {
+        try {
+            URL url = new URL("https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity=" + keyword);
+            HttpURLConnection connect = (HttpURLConnection)url.openConnection();
+            InputStream input = connect.getInputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(input));
+            String line = null;
+            System.out.println(connect.getResponseCode());
 
-                        sb.append(line);
+            while ((line = in.readLine()) != null) {
 
-                        //创建Json实例
-                        JSONObject jobj = new JSONObject(line);//builder读取了JSON中的数据。
-                        //直接传入JSONObject来构造一个实例
+                //创建Json实例
+                JSONObject jobj = new JSONObject(line);//builder读取了JSON中的数据。
+                //直接传入JSONObject来构造一个实例
 
-                        JSONArray array = jobj.getJSONArray("data");
-                        if(array.length()==0){//查询无结果
-                            hint = view.findViewById(R.id.entity_hint);
-                            hint.setVisibility(View.VISIBLE);
-                            hint.setText("无相关实体！");
+                JSONArray array = jobj.getJSONArray("data");
+                if(array.length()==0){//查询无结果
+                    hint = view.findViewById(R.id.entity_hint);
+                    hint.setVisibility(View.VISIBLE);
+                    hint.setText("无相关实体！");
+                }
+                else{
+
+                    hint = view.findViewById(R.id.entity_hint);
+                    hint.setVisibility(View.GONE);
+
+                    for (int i = 0; i < array.length(); i++) {
+
+                        Map<String, Object> currentEntity = new HashMap<>();
+
+                        JSONObject currentEntityJson = array.getJSONObject(i);
+                        String title = currentEntityJson.getString("label");
+                        currentEntity.put("title", title);
+
+                        String abstractInfo = currentEntityJson.getString("abstractInfo");
+                        JSONObject abstractJson = new JSONObject(abstractInfo);
+                        //以下三个会有一个有描述
+                        String enwiki = abstractJson.getString("enwiki");
+                        Log.v("YX", enwiki);
+                        String baidu = abstractJson.getString("baidu");
+                        Log.v("YX", baidu);
+                        String zhwiki = abstractJson.getString("zhwiki");
+                        Log.v("YX", zhwiki);
+
+                        if(!enwiki.equals("")){
+                            abstractInfo = enwiki;
+                        } else if(!baidu.equals("")){
+                            abstractInfo = baidu;
+                        } else if(!zhwiki.equals("")){
+                            abstractInfo = zhwiki;
+                        } else {
+                            abstractInfo = "暂无摘要！";
                         }
-                        else{
+                        currentEntity.put("abstractInfo", abstractInfo);
 
-                            hint = view.findViewById(R.id.entity_hint);
-                            hint.setVisibility(View.GONE);
+                        String covid = abstractJson.getString("COVID");
 
-                            for (int i = 0; i < array.length(); i++) {
+                        currentEntity.put("covid", covid);
 
-                                Map<String, Object> mapOfEntity = new HashMap<>();
+                        graphEntityList.add(currentEntity);
 
-                                JSONObject currentEntityJson = array.getJSONObject(i);
-                                String title = currentEntityJson.getString("label");
-                                mapOfEntity.put("title", title);
-
-                                String abstractInfo = currentEntityJson.getString("abstractInfo");
-                                JSONObject abstractJson = new JSONObject(abstractInfo);
-                                //以下三个会有一个有描述
-                                String enwiki = abstractJson.getString("enwiki");
-                                Log.v("YX", enwiki);
-                                String baidu = abstractJson.getString("baidu");
-                                Log.v("YX", baidu);
-                                String zhwiki = abstractJson.getString("zhwiki");
-                                Log.v("YX", zhwiki);
-
-                                if(!enwiki.equals("")){
-                                    abstractInfo = enwiki;
-                                } else if(!baidu.equals("")){
-                                    abstractInfo = baidu;
-                                } else if(!zhwiki.equals("")){
-                                    abstractInfo = zhwiki;
-                                } else {
-                                    abstractInfo = "暂无摘要！";
-                                }
-                                mapOfEntity.put("abstractInfo", abstractInfo);
-
-                                String covid = abstractJson.getString("COVID");
-
-                                mapOfEntity.put("covid", covid);
-
-                            }
-
-                        }
                     }
-                } catch (Exception e) {
-                    Log.v("YX", e.toString());
-                    System.out.println(e.toString());
+
                 }
             }
+        } catch (Exception e) {
 
+            Log.d("debug", e.toString());
+        }
 
-        }).start();
+        Log.d("debug", "the size of graphEntityList: " + graphEntityList.size());
 
         return graphEntityList;
 

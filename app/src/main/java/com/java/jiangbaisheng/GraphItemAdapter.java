@@ -38,11 +38,14 @@ public class GraphItemAdapter extends SimpleAdapter {
         super(context, data, resource, from, to);
         this.context = context;
         this.list = data;
+        Log.d("debug", "in adapter create once");
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        Log.d("debug", "in getView once");
 
         View view = null;
         if (convertView == null) {
@@ -54,9 +57,9 @@ public class GraphItemAdapter extends SimpleAdapter {
 
         TextView title = view.findViewById(R.id.entity_title);
         TextView abstractInfo = view.findViewById(R.id.entity_abstract);
-        ListView propertiesList = view.findViewById(R.id.entity_properties_list);
-        ListView parentEntitiesList = view.findViewById(R.id.parent_entities_list);
-        ListView childEntitiesList = view.findViewById(R.id.child_entities_list);
+        KocoListView propertiesList = view.findViewById(R.id.entity_properties_list);
+        KocoListView parentEntitiesList = view.findViewById(R.id.parent_entities_list);
+        KocoListView childEntitiesList = view.findViewById(R.id.child_entities_list);
 
         title.setText((String)list.get(position).get("title"));
         abstractInfo.setText((String)list.get(position).get("abstractInfo"));
@@ -87,6 +90,8 @@ public class GraphItemAdapter extends SimpleAdapter {
 
         } catch (JSONException e){
             Log.d("debug", "JSONException occured!");
+        } catch (Exception e){
+            Log.d("debug", e.toString());
         }
 
         return view;
@@ -123,7 +128,7 @@ public class GraphItemAdapter extends SimpleAdapter {
 
                 JSONObject currentRelationJson = relationsJsonArray.getJSONObject(k);
                 String forward = currentRelationJson.getString("forward");
-                if(forward.equals(false)) {
+                if(forward.equals("false")) {
                     continue;
                 }
 
@@ -156,7 +161,7 @@ public class GraphItemAdapter extends SimpleAdapter {
 
                 JSONObject currentRelationJson = relationsJsonArray.getJSONObject(k);
                 String forward = currentRelationJson.getString("forward");
-                if(forward.equals(true)) {
+                if(forward.equals("true")) {
                     continue;
                 }
 
