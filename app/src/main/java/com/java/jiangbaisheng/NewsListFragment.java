@@ -282,6 +282,7 @@ public class NewsListFragment extends Fragment {
 //        newsEntryList.add(0, map1);
 
 
+
         List<Newsdata> allUsers = Newsdatabase
                 .getInstance(getActivity())
                 .getNewsDao()
@@ -326,6 +327,12 @@ public class NewsListFragment extends Fragment {
             e.printStackTrace();
 
         }
+        catch (Exception e){
+
+            Log.d("debug", e.toString());
+
+        }
+
 
         if(first_called_putdata){
 

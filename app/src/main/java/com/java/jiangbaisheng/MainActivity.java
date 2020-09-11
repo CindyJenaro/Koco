@@ -284,4 +284,22 @@ public class MainActivity extends AppCompatActivity {
         } catch(Exception e){}
 
     }
+
+    public  ArrayList<String> findnewsbykey(String key){
+        ArrayList<String> newslist = new ArrayList<String>();
+
+        List<Newsdata> allnews = Newsdatabase
+                .getInstance(this)
+                .getNewsDao()
+                .getall();
+
+        for(int i=0;i<allnews.size();i++){
+            String title=allnews.get(i).getTitle();
+            if(title.contains(key)){
+                newslist.add(allnews.get(i).getNewsid());
+            }
+        }
+
+        return newslist;
+    }
 }
