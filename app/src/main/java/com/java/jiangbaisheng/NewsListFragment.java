@@ -253,6 +253,7 @@ public class NewsListFragment extends Fragment {
 //        list.add(map1);
 
 
+
         List<Newsdata> allUsers = Newsdatabase
                 .getInstance(getActivity())
                 .getNewsDao()
@@ -292,6 +293,12 @@ public class NewsListFragment extends Fragment {
             Log.d("debug", "No items in dataset yet.");
 
         }
+        catch (Exception e){
+
+            Log.d("debug", e.toString());
+
+        }
+
 
 
         Map<String, Object> noMoreItems = new HashMap<>();
