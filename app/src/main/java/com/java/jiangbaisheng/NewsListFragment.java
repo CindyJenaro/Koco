@@ -353,7 +353,6 @@ public class NewsListFragment extends Fragment {
                             else if(jauthor.has("name_zh"))
                                 authors += ", " + jauthor.getString("name_zh");
                         }
-
                     }
 
                     intent.putExtra("author", "作者：" + authors);

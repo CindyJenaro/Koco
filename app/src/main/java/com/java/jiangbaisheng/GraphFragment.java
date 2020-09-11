@@ -72,6 +72,7 @@ public class GraphFragment extends Fragment {
                 }
 
                 getgraphdata(searchkey);
+                kocoGA.notifyDataSetChanged();
 
                 return true;
             }
